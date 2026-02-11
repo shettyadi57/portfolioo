@@ -765,18 +765,26 @@ input:checked + .slider:before {
     <header>
         <div class="container">
             <nav>
-                <div class="logo">Adithya S<span> Shetty</span></div>
-                <div class="nav-links">
-                    <a href="#home">Home</a>
-                    <a href="#about">About</a>
-                    <a href="#projects">Projects</a>
-                    <a href="#education">Education</a>
-                    <a href="#contact">Contact</a>
-                </div>
-                <div class="mobile-menu">
-                    <i class="fas fa-bars"></i>
-                </div>
-            </nav>
+    <div class="logo">Adithya S<span> Shetty</span></div>
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#achievements">Achievements</a>
+        <a href="#projects">Projects</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+    </div>
+    
+    <!-- Dark Mode Toggle Button -->
+    <button id="theme-toggle" class="theme-toggle-btn">
+        <i class="fas fa-moon"></i>
+        <span>Dark Mode</span>
+    </button>
+    
+    <div class="mobile-menu">
+        <i class="fas fa-bars"></i>
+    </div>
+</nav>
         </div>
     </header>
    
@@ -805,6 +813,19 @@ input:checked + .slider:before {
             </div>
         </div>
     </section>
+    <!-- Option 1: Toggle Switch -->
+<div class="theme-switch-wrapper">
+    <label class="theme-switch" for="checkbox">
+        <input type="checkbox" id="checkbox" />
+        <div class="slider"></div>
+    </label>
+</div>
+
+<!-- Option 2: Button (Choose one) -->
+<button id="theme-toggle" class="theme-toggle-btn">
+    <i class="fas fa-moon"></i>
+    Dark Mode
+</button>
 
     <!-- About Section -->
     <section id="about" style="background-color: #f1f5f9;">
@@ -1065,10 +1086,95 @@ input:checked + .slider:before {
         // Update copyright year
         document.querySelector('.copyright p').textContent = 
             `© ${new Date().getFullYear()} Alex Chen. All rights reserved.`;
+    // Theme Switcher
+const themeToggle = document.getElementById('checkbox'); // For switch
+// OR
+const themeToggleBtn = document.getElementById('theme-toggle'); // For button
+const themeIcon = document.querySelector('.theme-toggle-btn i');
+const themeText = document.querySelector('.theme-toggle-btn span');
+
+// Check for saved theme preference
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme) {
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    
+    // Update toggle states
+    if (currentTheme === 'dark') {
+        if (themeToggle) themeToggle.checked = true;
+        if (themeIcon) {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+            themeText.textContent = 'Light Mode';
+        }
+    }
+}
+
+// Theme toggle function
+function toggleTheme() {
+    let theme = 'light';
+    if (document.documentElement.getAttribute('data-theme') === 'light') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        theme = 'dark';
+        if (themeIcon) {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+            themeText.textContent = 'Light Mode';
+        }
+    } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        theme = 'light';
+        if (themeIcon) {
+            themeIcon.classList.remove('fa-sun');
+            themeIcon.classList.add('fa-moon');
+            themeText.textContent = 'Dark Mode';
+        }
+    }
+    localStorage.setItem('theme', theme);
+}
+
+// Event listeners
+if (themeToggle) {
+    themeToggle.addEventListener('change', toggleTheme);
+}
+
+if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', toggleTheme);
+}
+
+// Optional: System preference detection
+const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+// Check if user hasn't set a preference
+if (!localStorage.getItem('theme')) {
+    if (prefersDarkScheme.matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        if (themeToggle) themeToggle.checked = true;
+        if (themeIcon) {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+            themeText.textContent = 'Light Mode';
+        }
+        localStorage.setItem('theme', 'dark');
+    }
+}
+
+// Listen for system theme changes
+prefersDarkScheme.addEventListener('change', (e) => {
+    if (!localStorage.getItem('theme')) {
+        if (e.matches) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            if (themeToggle) themeToggle.checked = true;
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            if (themeToggle) themeToggle.checked = false;
+        }
+    }
+});
     
 </script>
    
 </body>
 
 </html>
+
 
