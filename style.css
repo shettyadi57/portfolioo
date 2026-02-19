@@ -566,3 +566,125 @@
             }
         }
    
+/* Theme Toggle Button */
+.theme-toggle-container {
+    margin-left: 20px;
+}
+
+.theme-toggle-btn {
+    background: var(--bg-card);
+    border: 2px solid var(--border-light);
+    border-radius: 40px;
+    width: 44px;
+    height: 44px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    padding: 0;
+}
+
+.theme-toggle-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: rotate(15deg);
+}
+
+.theme-toggle-btn svg {
+    transition: all 0.3s ease;
+}
+
+.theme-toggle-btn .sun-icon {
+    display: block;
+}
+
+.theme-toggle-btn .moon-icon {
+    display: none;
+}
+
+.dark-mode .theme-toggle-btn .sun-icon {
+    display: none;
+}
+
+.dark-mode .theme-toggle-btn .moon-icon {
+    display: block;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .theme-toggle-container {
+        margin-left: 10px;
+    }
+    
+    .nav-links {
+        display: none;
+    }
+}
+/* Light mode (default) */
+:root {
+    --primary: #2563eb;
+    --secondary: #1e40af;
+    --accent: #06b6d4;
+    
+    /* Light Mode Colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8fafc;
+    --bg-card: #ffffff;
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --border-light: #e2e8f0;
+    --border-medium: #cbd5e1;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
+    --nav-bg: rgba(255, 255, 255, 0.9);
+    --card-hover: #f1f5f9;
+}
+
+/* Dark mode - THIS WILL ACTUALLY TURN BLACK */
+/* FORCE DARK MODE STYLES - ADD AT END OF CSS */
+.dark-mode,
+.dark-mode body,
+.dark-mode header,
+.dark-mode section,
+.dark-mode footer {
+    background-color: #0a0c10 !important;
+    color: #ededed !important;
+}
+
+.dark-mode .bg-white,
+.dark-mode .bg-light,
+.dark-mode .project-card,
+.dark-mode .achievement-card,
+.dark-mode .certifications-list {
+    background-color: #111315 !important;
+    border-color: #2a2a2a !important;
+    color: #ededed !important;
+}
+
+.dark-mode .nav-links a,
+.dark-mode p,
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4 {
+    color: #ededed !important;
+}
+
+.dark-mode .text-muted,
+.dark-mode .text-secondary {
+    color: #a0a0a0 !important;
+}
+
+.dark-mode .btn-outline {
+    border-color: #3b82f6 !important;
+    color: #3b82f6 !important;
+}
+
+.dark-mode .btn-outline:hover {
+    background-color: #3b82f6 !important;
+    color: #0a0c10 !important;
+}

@@ -3,13 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adithya S Shetty | Tech Student Portfolio</title>
+    <title>ADITHYA S SHETTY | Tech Student Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
     <link rel="java script" href="script.js">
 </head>
-
+<body class="light-mode">
+    <!-- Your content -->
+</body>
 <<<<<<< HEAD
 =======
        
@@ -19,8 +21,9 @@
     <!-- Header & Navigation -->
     <header>
         <div class="container">
-            <nav>
-    <div class="logo">Adithya S<span> Shetty</span></div>
+           <!-- Replace your existing nav with this -->
+<nav>
+    <div class="logo">ADITHYA S <span>SHETTY</span></div>
     <div class="nav-links">
         <a href="#home">Home</a>
         <a href="#about">About</a>
@@ -30,12 +33,23 @@
         <a href="#contact">Contact</a>
     </div>
     
-    <!-- Dark Mode Toggle Button -->
-    <button id="theme-toggle" class="theme-toggle-btn">
-        <i class="fas fa-moon"></i>
-        <span>Dark Mode</span>
-    </button>
+    <!-- Professional Dark Mode Toggle -->
+    <div class="theme-toggle-container">
+        <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
+            <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
+                <path d="M12 2V4M12 20V22M4 12H2M22 12H20M19.07 4.93L17.66 6.34M6.34 17.66L4.93 19.07M19.07 19.07L17.66 17.66M6.34 6.34L4.93 4.93" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+        </button>
+    </div>
     
+    <div class="mobile-menu">
+        <i class="fas fa-bars"></i>
+    </div>
+</nav>
     <div class="mobile-menu">
         <i class="fas fa-bars"></i>
     </div>
@@ -49,7 +63,7 @@
     <section id="home" class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>Adithya S Shetty</h1>
+                <h1>ADITHYA S SHETTY</h1>
                 <h2>Computer Science Student & Full-Stack Developer</h2>
                 <p>I'm a passionate tech student specializing in Python. Currently pursuing my Bachelor's in Computer Science at kuvempu University with a focus on building innovative solutions to real-world problems.</p>
                 <div>
@@ -256,7 +270,35 @@
             </div>
         </div>
     </footer>
-
+<script>
+    // IMMEDIATE DARK MODE EXECUTION
+    (function() {
+        // Check for saved theme
+        const savedTheme = localStorage.getItem('theme');
+        
+        // Apply dark mode immediately if saved
+        if (savedTheme === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+        
+        // Set up toggle when page loads
+        window.addEventListener('load', function() {
+            const toggleBtn = document.getElementById('theme-toggle');
+            
+            if (toggleBtn) {
+                toggleBtn.addEventListener('click', function() {
+                    if (document.body.classList.contains('dark-mode')) {
+                        document.body.classList.remove('dark-mode');
+                        localStorage.setItem('theme', 'light');
+                    } else {
+                        document.body.classList.add('dark-mode');
+                        localStorage.setItem('theme', 'dark');
+                    }
+                });
+            }
+        });
+    })();
+</script>
    
 </body>
 
