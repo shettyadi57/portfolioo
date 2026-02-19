@@ -225,3 +225,104 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(forceDarkMode, 50);
     });
 });
+// Mobile Menu Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+    const mobileMenuClose = document.querySelector('.mobile-menu-close');
+    const body = document.body;
+    
+    // Open mobile menu
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenuOverlay.classList.add('active');
+            body.style.overflow = 'hidden'; // Prevent scrolling
+        });
+    }
+    
+    // Close mobile menu
+    if (mobileMenuClose) {
+        mobileMenuClose.addEventListener('click', function() {
+            mobileMenuOverlay.classList.remove('active');
+            body.style.overflow = ''; // Restore scrolling
+        });
+    }
+    
+    // Close mobile menu when clicking on a link
+    const mobileLinks = document.querySelectorAll('.mobile-menu-links a');
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            mobileMenuOverlay.classList.remove('active');
+            body.style.overflow = '';
+        });
+    });
+    
+    // Close mobile menu with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mobileMenuOverlay.classList.contains('active')) {
+            mobileMenuOverlay.classList.remove('active');
+            body.style.overflow = '';
+        }
+    });
+    
+    // Dark Mode Toggle (works for both desktop and mobile)
+    const themeToggle = document.getElementById('theme-toggle');
+    const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+    
+    // Check localStorage for saved theme
+    const savedTheme = localStorage.getItem('theme');
+    
+    // Apply saved theme
+    if (savedTheme === 'dark') {
+        body.classList.add('dark-mode');
+    }
+    
+    // Toggle function
+    function toggleDarkMode() {
+        if (body.classList.contains('dark-mode')) {
+            body.classList.remove('dark-mode');
+            localStorage.setItem('theme', 'light');
+        } else {
+            body.classList.add('dark-mode');
+            localStorage.setItem('theme', 'dark');
+        }
+    }
+    
+    // Add event listeners to both toggle buttons
+    if (themeToggle) {
+        themeToggle.addEventListener('click', toggleDarkMode);
+    }
+    
+    if (mobileThemeToggle) {
+        mobileThemeToggle.addEventListener('click', toggleDarkMode);
+    }
+    
+    // Smooth scrolling for all anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if(targetId === '#') return;
+            
+            const targetElement = document.querySelector(targetId);
+            if(targetElement) {
+                const headerOffset = 80;
+                const elementPosition = targetElement.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            mobileMenuOverlay.classList.remove('active');
+            body.style.overflow = '';
+        }
+    });
+});
