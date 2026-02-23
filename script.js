@@ -326,3 +326,66 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+// Mobile Menu Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuBtn = document.querySelector('.mobile-menu');
+    const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
+    const mobileMenuClose = document.querySelector('.mobile-menu-close');
+    const body = document.body;
+    
+    // Create mobile menu button if it doesn't exist properly
+    if (mobileMenuBtn) {
+        // Make sure it's visible on mobile
+        mobileMenuBtn.style.display = 'none'; // Will be shown by CSS
+        
+        // Open menu
+        mobileMenuBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            mobileMenuOverlay.classList.add('active');
+            body.style.overflow = 'hidden';
+        });
+    }
+    
+    // Close menu
+    if (mobileMenuClose) {
+        mobileMenuClose.addEventListener('click', function() {
+            mobileMenuOverlay.classList.remove('active');
+            body.style.overflow = '';
+        });
+    }
+    
+    // Close when clicking on links
+    const mobileLinks = document.querySelectorAll('.mobile-menu-links a');
+    mobileLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            mobileMenuOverlay.classList.remove('active');
+            body.style.overflow = '';
+        });
+    });
+    
+    // Close with Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && mobileMenuOverlay.classList.contains('active')) {
+            mobileMenuOverlay.classList.remove('active');
+            body.style.overflow = '';
+        }
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        if (window.innerWidth > 768) {
+            mobileMenuOverlay.classList.remove('active');
+            body.style.overflow = '';
+        }
+    });
+    
+    // Theme toggle for mobile
+    const mobileThemeToggle = document.getElementById('mobile-theme-toggle');
+    if (mobileThemeToggle) {
+        mobileThemeToggle.addEventListener('click', function() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        });
+    }
+});
