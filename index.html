@@ -3,40 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adithya S Shetty | CS Student & Developer</title>
-    <meta name="description" content="Portfolio of Adithya S Shetty — Computer Science student at Kuvempu University, Full-Stack Developer, Python enthusiast, and competitive coding champion.">
-    <meta name="keywords" content="Adithya S Shetty, portfolio, computer science, developer, python, flask, Kuvempu University">
+    <title>Adithya S Shetty | 3D Cyber Portfolio & Full-Stack Engineer</title>
+    <meta name="description" content="Official 3D Portfolio of Adithya S Shetty — CS Student, Full-Stack Developer, AI & Python Specialist, Competitive Coding Champion.">
+    <meta name="keywords" content="Adithya S Shetty, 3D Portfolio, Full Stack Developer, Python, Little Heart Beat, ChronosAI, Kuvempu University">
     <meta name="author" content="Adithya S Shetty">
 
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700;800&family=Outfit:wght@300;400;500;600;700;800;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="cyber-theme">
 
-    <!-- 3D Canvas Background -->
+    <!-- 3D WebGL Canvas Background -->
     <canvas id="bg-canvas"></canvas>
 
-    <!-- Loading Screen -->
+    <!-- Cyberpunk Loader Screen -->
     <div id="loader">
         <div class="loader-content">
-            <div class="loader-ring"></div>
+            <div class="loader-cyber-ring">
+                <div class="ring-core"></div>
+                <div class="ring-spinner"></div>
+            </div>
             <div class="loader-text">
-                <span class="loader-name">ASS</span>
-                <span class="loader-sub">Initializing...</span>
+                <span class="loader-logo">&lt;ADITHYA /&gt;</span>
+                <div class="loader-bar-wrap">
+                    <div class="loader-bar-fill" id="loader-bar"></div>
+                </div>
+                <span class="loader-status" id="loader-status">INITIALIZING 8K 3D ENGINE...</span>
             </div>
         </div>
     </div>
 
-    <!-- Cursor -->
+    <!-- Interactive Cursor & Particle Ring -->
     <div class="cursor-dot" id="cursor-dot"></div>
     <div class="cursor-outline" id="cursor-outline"></div>
+    <div class="cursor-trail" id="cursor-trail"></div>
 
-    <!-- Noise overlay -->
+    <!-- Scanline & Noise FX -->
+    <div class="scanline-overlay"></div>
     <div class="noise-overlay"></div>
+
+    <!-- Top HUD Coordinates Bar -->
+    <div class="hud-top-bar">
+        <div class="hud-item"><span class="hud-label">SYS_STATUS:</span> <span class="hud-val pulse-green">ONLINE // 8K WebGL</span></div>
+        <div class="hud-item desktop-only"><span class="hud-label">LOC:</span> <span class="hud-val">13.9299° N, 75.5681° E</span></div>
+        <div class="hud-item"><span class="hud-label">FPS:</span> <span class="hud-val" id="fps-counter">60</span></div>
+    </div>
 
     <!-- ═══════════════ HEADER ═══════════════ -->
     <header id="header">
@@ -59,7 +74,18 @@
             </nav>
 
             <div class="nav-actions">
-                <a href="#contact" class="nav-cta">Hire Me</a>
+                <button class="sound-toggle-btn" id="sound-toggle" title="Toggle SFX Audio">
+                    <i class="fas fa-volume-up" id="sound-icon"></i>
+                    <span>SFX</span>
+                </button>
+                <button class="terminal-toggle-btn" id="terminal-toggle" title="Open Interactive CLI Terminal">
+                    <i class="fas fa-terminal"></i>
+                    <span>CLI</span>
+                </button>
+                <a href="#contact" class="nav-cta">
+                    <span>HIRE ME</span>
+                    <i class="fas fa-bolt"></i>
+                </a>
                 <button class="hamburger" id="hamburger" aria-label="Menu">
                     <span></span><span></span><span></span>
                 </button>
@@ -67,10 +93,11 @@
         </div>
     </header>
 
-    <!-- Mobile Menu -->
+    <!-- Mobile Navigation Drawer -->
     <div class="mobile-menu" id="mobile-menu">
         <div class="mobile-menu-inner">
             <button class="mobile-close" id="mobile-close"><i class="fas fa-times"></i></button>
+            <div class="mobile-logo">&lt;ADITHYA /&gt;</div>
             <nav class="mobile-nav">
                 <a href="#home" class="mobile-link"><span class="link-num">01.</span>Home</a>
                 <a href="#about" class="mobile-link"><span class="link-num">02.</span>About</a>
@@ -83,159 +110,229 @@
         </div>
     </div>
 
-    <!-- ═══════════════ HERO ═══════════════ -->
+    <!-- Interactive Hacker CLI Terminal Modal -->
+    <div class="terminal-modal" id="terminal-modal">
+        <div class="terminal-window">
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <span class="t-btn close" id="term-close"></span>
+                    <span class="t-btn min"></span>
+                    <span class="t-btn max"></span>
+                </div>
+                <div class="terminal-title">adithya@cyber-node:~ (zsh)</div>
+            </div>
+            <div class="terminal-body" id="terminal-body">
+                <div class="term-line welcome">System Ready. Type <span class="term-cmd">help</span> for commands.</div>
+                <div class="term-line">Available commands: <span class="term-highlight">projects, skills, bio, contact, clear, matrix, exit</span></div>
+            </div>
+            <div class="terminal-input-row">
+                <span class="term-prompt">adithya@cyber-node:~$</span>
+                <input type="text" id="terminal-input" autocomplete="off" placeholder="Type a command...">
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ HERO SECTION ═══════════════ -->
     <section id="home" class="hero">
         <div class="hero-bg-grid"></div>
         <div class="hero-container">
             <div class="hero-content">
                 <div class="hero-badge">
                     <span class="badge-dot"></span>
-                    <span>Available for opportunities</span>
+                    <span>AVAILABLE FOR FULL-STACK & AI ROLES</span>
                 </div>
 
                 <h1 class="hero-title">
-                    <span class="title-line">Hi, I'm</span>
-                    <span class="title-name glitch" data-text="Adithya S Shetty">Adithya S Shetty</span>
+                    <span class="title-greeting">Hello World, I'm</span>
+                    <span class="title-name cyber-glitch" data-text="Adithya S Shetty">Adithya S Shetty</span>
                 </h1>
 
                 <div class="hero-roles">
-                    <span class="role-prefix">I build&nbsp;</span>
+                    <span class="role-prefix">&gt; SYSTEM.BUILD(</span>
                     <div class="roles-slider">
-                        <span class="role-item">Full-Stack Apps</span>
-                        <span class="role-item">Python Solutions</span>
-                        <span class="role-item">Web Dashboards</span>
-                        <span class="role-item">Innovative Products</span>
+                        <span class="role-item">"Full-Stack Applications"</span>
+                        <span class="role-item">"AI-Powered Platforms"</span>
+                        <span class="role-item">"GovTech PWAs"</span>
+                        <span class="role-item">"CCTV Forensics Engines"</span>
                     </div>
+                    <span class="role-suffix">);</span>
                 </div>
 
                 <p class="hero-desc">
-                    2nd year <span class="highlight">BCA student</span> at Kuvempu University. 
-                    District-level <span class="highlight">coding champion</span>, national hackathon runner-up, 
-                    and passionate builder of real-world tech solutions.
+                    Second-year <span class="highlight">BCA Scholar</span> at Kuvempu University. District Coding Champion, 
+                    National Hackathon Runner-Up, and creator of production-grade AI platforms like 
+                    <span class="highlight">Little Heart Beat</span> & <span class="highlight">ChronosAI</span>.
                 </p>
 
+                <!-- Hero KPI Cards -->
                 <div class="hero-stats">
-                    <div class="stat-item">
-                        <span class="stat-num">2+</span>
-                        <span class="stat-label">Years Coding</span>
+                    <div class="stat-card">
+                        <div class="stat-glow"></div>
+                        <span class="stat-num" data-target="2">0</span><span class="stat-plus">+</span>
+                        <span class="stat-label">YEARS DEV</span>
                     </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-num">4+</span>
-                        <span class="stat-label">Awards Won</span>
+                    <div class="stat-card">
+                        <div class="stat-glow"></div>
+                        <span class="stat-num" data-target="4">0</span><span class="stat-plus">+</span>
+                        <span class="stat-label">AWARDS WON</span>
                     </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <span class="stat-num">7.67</span>
-                        <span class="stat-label">CGPA</span>
+                    <div class="stat-card">
+                        <div class="stat-glow"></div>
+                        <span class="stat-num" data-target="7.67" data-decimals="2">0.00</span>
+                        <span class="stat-label">CGPA GPA</span>
                     </div>
                 </div>
 
                 <div class="hero-actions">
-                    <a href="#projects" class="btn-primary">
-                        <span>View Projects</span>
+                    <a href="#projects" class="btn-cyber-primary">
+                        <span>EXPLORE WORK</span>
                         <i class="fas fa-arrow-right"></i>
                     </a>
-                    <a href="#contact" class="btn-ghost">
-                        <span>Let's Talk</span>
+                    <a href="#contact" class="btn-cyber-ghost">
+                        <i class="fas fa-comments"></i>
+                        <span>LET'S CONNECT</span>
                     </a>
                 </div>
 
                 <div class="hero-social">
-                    <a href="https://github.com/shettyadi57" target="_blank" class="social-pill">
-                        <i class="fab fa-github"></i> GitHub
+                    <a href="https://github.com/shettyadi57" target="_blank" class="social-cyber-pill">
+                        <i class="fab fa-github"></i> <span>GitHub</span>
                     </a>
-                    <a href="https://www.linkedin.com/in/adithya-s-shetty-99b810331/" target="_blank" class="social-pill">
-                        <i class="fab fa-linkedin-in"></i> LinkedIn
+                    <a href="https://www.linkedin.com/in/adithya-s-shetty-99b810331/" target="_blank" class="social-cyber-pill">
+                        <i class="fab fa-linkedin-in"></i> <span>LinkedIn</span>
                     </a>
-                    <a href="mailto:shettyadithyas57@gmail.com" class="social-pill">
-                        <i class="fas fa-envelope"></i> Email
+                    <a href="mailto:shettyadithyas57@gmail.com" class="social-cyber-pill">
+                        <i class="fas fa-envelope"></i> <span>Email</span>
                     </a>
                 </div>
             </div>
 
+            <!-- Hero 3D Interactive Cyber Avatar & HUD -->
             <div class="hero-visual">
+                <div class="cyber-radar"></div>
                 <div class="visual-ring ring-1"></div>
                 <div class="visual-ring ring-2"></div>
                 <div class="visual-ring ring-3"></div>
-                <div class="profile-frame">
-                    <div class="profile-glow"></div>
-                    <img src="portfolio.jpeg" alt="Adithya S Shetty" class="profile-img">
-                    <div class="profile-badge-fl">
+
+                <div class="cyber-avatar-frame tilt-card">
+                    <div class="avatar-glow"></div>
+                    <div class="avatar-scan-line"></div>
+                    <img src="portfolio.jpeg" alt="Adithya S Shetty" class="avatar-img">
+                    
+                    <div class="avatar-hud-tag top-left">
+                        <span class="hud-dot green"></span>
+                        <span>STATUS: ACTIVE</span>
+                    </div>
+                    <div class="avatar-hud-tag bottom-right">
                         <i class="fas fa-trophy"></i>
-                        <span>District Champ</span>
+                        <span>DISTRICT CHAMPION</span>
                     </div>
                 </div>
-                <div class="floating-card card-1">
-                    <i class="fab fa-python"></i>
-                    <span>Python</span>
+
+                <!-- Floating 3D Tech Holograms -->
+                <div class="floating-tech-card card-python tilt-card">
+                    <div class="ft-icon"><i class="fab fa-python"></i></div>
+                    <div class="ft-text">
+                        <span class="ft-name">Python 3.11</span>
+                        <span class="ft-sub">Core Backend & AI</span>
+                    </div>
                 </div>
-                <div class="floating-card card-2">
-                    <i class="fas fa-flask"></i>
-                    <span>Flask</span>
+
+                <div class="floating-tech-card card-react tilt-card">
+                    <div class="ft-icon"><i class="fab fa-react"></i></div>
+                    <div class="ft-text">
+                        <span class="ft-name">React 18 & TS</span>
+                        <span class="ft-sub">Full Stack Frontend</span>
+                    </div>
                 </div>
-                <div class="floating-card card-3">
-                    <i class="fas fa-code"></i>
-                    <span>Full Stack</span>
+
+                <div class="floating-tech-card card-ai tilt-card">
+                    <div class="ft-icon"><i class="fas fa-brain"></i></div>
+                    <div class="ft-text">
+                        <span class="ft-name">Gemini & Llama 3</span>
+                        <span class="ft-sub">Generative AI Engines</span>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="hero-scroll-indicator">
-            <div class="scroll-line"></div>
-            <span>Scroll</span>
+            <div class="scroll-mouse">
+                <div class="mouse-wheel"></div>
+            </div>
+            <span>SCROLL DOWN</span>
         </div>
     </section>
 
-    <!-- ═══════════════ ABOUT ═══════════════ -->
+    <!-- ═══════════════ ABOUT SECTION ═══════════════ -->
     <section id="about" class="about">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-tag">01. About</span>
-                <h2 class="section-title">Driven by Innovation</h2>
-                <p class="section-sub">Turning complex problems into elegant solutions</p>
+                <span class="section-tag">&lt; 01. ABOUT /&gt;</span>
+                <h2 class="section-title">Driven By Code & Innovation</h2>
+                <p class="section-sub">Engineered to solve complex real-world challenges through full-stack and AI software.</p>
             </div>
 
             <div class="about-grid">
                 <div class="about-text-col">
-                    <div class="about-card glass-card">
-                        <p>I'm a <strong>second-year BCA student</strong> at Kuvempu University with a deep passion for building technology that solves real-world problems. My journey started with Python and has evolved into full-stack development.</p>
-                        <p>Beyond academics, I compete in coding contests, winning at district and national levels. I believe in learning by doing — every project I build teaches me something new.</p>
-                        <div class="about-highlights">
-                            <div class="highlight-item">
+                    <div class="about-cyber-card glass-card tilt-card">
+                        <div class="card-corner top-left"></div>
+                        <div class="card-corner top-right"></div>
+                        <div class="card-corner bottom-left"></div>
+                        <div class="card-corner bottom-right"></div>
+
+                        <h3>Computer Science Scholar & Engineer</h3>
+                        <p>I am a second-year <strong>Bachelor of Computer Applications (BCA)</strong> student at Kuvempu University, passionate about developing impactful tech products.</p>
+                        <p>From district-level competitive programming to building national hackathon-winning platforms, I specialize in full-stack web engineering, FastAPI/Python backends, and integrating Generative AI models into real-world applications.</p>
+                        
+                        <div class="about-meta-grid">
+                            <div class="meta-box">
                                 <i class="fas fa-map-marker-alt"></i>
-                                <span>Shimoga, Karnataka</span>
+                                <div>
+                                    <span class="meta-label">LOCATION</span>
+                                    <span class="meta-val">Shivamogga, Karnataka</span>
+                                </div>
                             </div>
-                            <div class="highlight-item">
-                                <i class="fas fa-graduation-cap"></i>
-                                <span>Kuvempu University</span>
+                            <div class="meta-box">
+                                <i class="fas fa-university"></i>
+                                <div>
+                                    <span class="meta-label">INSTITUTION</span>
+                                    <span class="meta-val">Kuvempu University</span>
+                                </div>
                             </div>
-                            <div class="highlight-item">
+                            <div class="meta-box">
                                 <i class="fas fa-envelope"></i>
-                                <span>shettyadithyas57@gmail.com</span>
+                                <div>
+                                    <span class="meta-label">EMAIL</span>
+                                    <span class="meta-val">shettyadithyas57@gmail.com</span>
+                                </div>
                             </div>
-                            <div class="highlight-item">
+                            <div class="meta-box">
                                 <i class="fas fa-phone"></i>
-                                <span>+91 8088716254</span>
+                                <div>
+                                    <span class="meta-label">PHONE</span>
+                                    <span class="meta-val">+91 8088716254</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="about-visual-col">
-                    <div class="tech-orbit">
-                        <div class="orbit-center">
-                            <i class="fas fa-code"></i>
+                    <div class="tech-3d-orbit">
+                        <div class="orbit-core">
+                            <i class="fas fa-terminal"></i>
+                            <span>DEV</span>
                         </div>
-                        <div class="orbit orbit-1">
-                            <div class="orbit-icon" style="--angle: 0deg"><i class="fab fa-python"></i></div>
-                            <div class="orbit-icon" style="--angle: 120deg"><i class="fab fa-js"></i></div>
-                            <div class="orbit-icon" style="--angle: 240deg"><i class="fab fa-html5"></i></div>
+                        <div class="orbit-ring ring-inner">
+                            <div class="orbit-node node-py"><i class="fab fa-python"></i></div>
+                            <div class="orbit-node node-js"><i class="fab fa-js"></i></div>
+                            <div class="orbit-node node-react"><i class="fab fa-react"></i></div>
                         </div>
-                        <div class="orbit orbit-2">
-                            <div class="orbit-icon" style="--angle: 60deg"><i class="fab fa-css3-alt"></i></div>
-                            <div class="orbit-icon" style="--angle: 180deg"><i class="fas fa-database"></i></div>
-                            <div class="orbit-icon" style="--angle: 300deg"><i class="fab fa-github"></i></div>
+                        <div class="orbit-ring ring-outer">
+                            <div class="orbit-node node-docker"><i class="fab fa-docker"></i></div>
+                            <div class="orbit-node node-git"><i class="fab fa-git-alt"></i></div>
+                            <div class="orbit-node node-db"><i class="fas fa-database"></i></div>
                         </div>
                     </div>
                 </div>
@@ -243,121 +340,115 @@
         </div>
     </section>
 
-    <!-- ═══════════════ SKILLS ═══════════════ -->
+    <!-- ═══════════════ SKILLS SECTION ═══════════════ -->
     <section id="skills" class="skills">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-tag">02. Skills</span>
-                <h2 class="section-title">Tech Arsenal</h2>
-                <p class="section-sub">Technologies I work with every day</p>
+                <span class="section-tag">&lt; 02. SKILLS /&gt;</span>
+                <h2 class="section-title">Technical Arsenal</h2>
+                <p class="section-sub">Languages, frameworks, and engineering competencies</p>
             </div>
 
             <div class="skills-grid">
-                <div class="skill-category glass-card">
-                    <div class="category-header">
-                        <div class="category-icon"><i class="fas fa-code"></i></div>
+                <div class="skill-cyber-card glass-card tilt-card">
+                    <div class="sk-header">
+                        <div class="sk-icon"><i class="fas fa-code"></i></div>
                         <h3>Languages</h3>
                     </div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">JavaScript</span>
-                        <span class="skill-tag">HTML5</span>
-                        <span class="skill-tag">CSS3</span>
-                        <span class="skill-tag">SQL</span>
-                        <span class="skill-tag">C</span>
+                    <div class="sk-tags">
+                        <span class="sk-badge">Python 3</span>
+                        <span class="sk-badge">TypeScript</span>
+                        <span class="sk-badge">JavaScript (ES6+)</span>
+                        <span class="sk-badge">HTML5 / CSS3</span>
+                        <span class="sk-badge">SQL</span>
+                        <span class="sk-badge">C Language</span>
                     </div>
                 </div>
 
-                <div class="skill-category glass-card">
-                    <div class="category-header">
-                        <div class="category-icon"><i class="fas fa-server"></i></div>
-                        <h3>Frameworks</h3>
+                <div class="skill-cyber-card glass-card tilt-card">
+                    <div class="sk-header">
+                        <div class="sk-icon"><i class="fas fa-cubes"></i></div>
+                        <h3>Frameworks & Libs</h3>
                     </div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Flask</span>
-                        <span class="skill-tag">Chart.js</span>
-                        <span class="skill-tag">WebSockets</span>
-                        <span class="skill-tag">REST APIs</span>
-                        <span class="skill-tag">psutil</span>
-                    </div>
-                </div>
-
-                <div class="skill-category glass-card">
-                    <div class="category-header">
-                        <div class="category-icon"><i class="fas fa-tools"></i></div>
-                        <h3>Tools & Platforms</h3>
-                    </div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Git & GitHub</span>
-                        <span class="skill-tag">VS Code</span>
-                        <span class="skill-tag">Linux</span>
-                        <span class="skill-tag">MySQL</span>
-                        <span class="skill-tag">Postman</span>
+                    <div class="sk-tags">
+                        <span class="sk-badge">React 18</span>
+                        <span class="sk-badge">FastAPI</span>
+                        <span class="sk-badge">Flask</span>
+                        <span class="sk-badge">Tailwind CSS</span>
+                        <span class="sk-badge">Vite</span>
+                        <span class="sk-badge">OpenCV & YOLOv8</span>
                     </div>
                 </div>
 
-                <div class="skill-category glass-card">
-                    <div class="category-header">
-                        <div class="category-icon"><i class="fas fa-brain"></i></div>
-                        <h3>Concepts</h3>
+                <div class="skill-cyber-card glass-card tilt-card">
+                    <div class="sk-header">
+                        <div class="sk-icon"><i class="fas fa-server"></i></div>
+                        <h3>Cloud & Backend</h3>
                     </div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">DSA</span>
-                        <span class="skill-tag">OOP</span>
-                        <span class="skill-tag">System Design</span>
-                        <span class="skill-tag">Real-time Systems</span>
-                        <span class="skill-tag">Web Dev</span>
+                    <div class="sk-tags">
+                        <span class="sk-badge">Supabase</span>
+                        <span class="sk-badge">PostgreSQL</span>
+                        <span class="sk-badge">SQLite</span>
+                        <span class="sk-badge">Docker</span>
+                        <span class="sk-badge">Nginx</span>
+                        <span class="sk-badge">WebSockets</span>
+                    </div>
+                </div>
+
+                <div class="skill-cyber-card glass-card tilt-card">
+                    <div class="sk-header">
+                        <div class="sk-icon"><i class="fas fa-microchip"></i></div>
+                        <h3>AI & Tools</h3>
+                    </div>
+                    <div class="sk-tags">
+                        <span class="sk-badge">Groq Llama 3 70B</span>
+                        <span class="sk-badge">Google Gemini API</span>
+                        <span class="sk-badge">Capacitor Mobile</span>
+                        <span class="sk-badge">Git & GitHub</span>
+                        <span class="sk-badge">Linux Edge</span>
+                        <span class="sk-badge">ReportLab PDF</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Proficiency Bars -->
-            <div class="proficiency-section">
-                <h3 class="prof-title">Core Proficiency</h3>
-                <div class="prof-bars">
-                    <div class="prof-item">
-                        <div class="prof-meta">
-                            <span>Python</span>
-                            <span>85%</span>
+            <!-- Interactive Skill Meters -->
+            <div class="skill-meters-container glass-card">
+                <h3 class="sm-heading">ENGINEERING PROFICIENCY METRICS</h3>
+                <div class="meters-list">
+                    <div class="meter-item">
+                        <div class="meter-info">
+                            <span class="meter-name">Python & FastAPI Backend</span>
+                            <span class="meter-pct" data-value="92">0%</span>
                         </div>
-                        <div class="prof-bar">
-                            <div class="prof-fill" data-width="85"></div>
-                        </div>
-                    </div>
-                    <div class="prof-item">
-                        <div class="prof-meta">
-                            <span>HTML / CSS</span>
-                            <span>80%</span>
-                        </div>
-                        <div class="prof-bar">
-                            <div class="prof-fill" data-width="80"></div>
+                        <div class="meter-bar-track">
+                            <div class="meter-bar-fill" style="width: 0%;" data-fill="92%"></div>
                         </div>
                     </div>
-                    <div class="prof-item">
-                        <div class="prof-meta">
-                            <span>JavaScript</span>
-                            <span>70%</span>
+                    <div class="meter-item">
+                        <div class="meter-info">
+                            <span class="meter-name">React 18 & TypeScript Frontend</span>
+                            <span class="meter-pct" data-value="88">0%</span>
                         </div>
-                        <div class="prof-bar">
-                            <div class="prof-fill" data-width="70"></div>
-                        </div>
-                    </div>
-                    <div class="prof-item">
-                        <div class="prof-meta">
-                            <span>Flask / Backend</span>
-                            <span>75%</span>
-                        </div>
-                        <div class="prof-bar">
-                            <div class="prof-fill" data-width="75"></div>
+                        <div class="meter-bar-track">
+                            <div class="meter-bar-fill" style="width: 0%;" data-fill="88%"></div>
                         </div>
                     </div>
-                    <div class="prof-item">
-                        <div class="prof-meta">
-                            <span>SQL / Databases</span>
-                            <span>65%</span>
+                    <div class="meter-item">
+                        <div class="meter-info">
+                            <span class="meter-name">AI Integration (Gemini / Groq / YOLOv8)</span>
+                            <span class="meter-pct" data-value="85">0%</span>
                         </div>
-                        <div class="prof-bar">
-                            <div class="prof-fill" data-width="65"></div>
+                        <div class="meter-bar-track">
+                            <div class="meter-bar-fill" style="width: 0%;" data-fill="85%"></div>
+                        </div>
+                    </div>
+                    <div class="meter-item">
+                        <div class="meter-info">
+                            <span class="meter-name">Database Architecture (PostgreSQL/SQLite)</span>
+                            <span class="meter-pct" data-value="80">0%</span>
+                        </div>
+                        <div class="meter-bar-track">
+                            <div class="meter-bar-fill" style="width: 0%;" data-fill="80%"></div>
                         </div>
                     </div>
                 </div>
@@ -365,258 +456,261 @@
         </div>
     </section>
 
-    <!-- ═══════════════ PROJECTS ═══════════════ -->
+    <!-- ═══════════════ PROJECTS SECTION ═══════════════ -->
     <section id="projects" class="projects">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-tag">03. Projects</span>
-                <h2 class="section-title">Featured Work</h2>
-                <p class="section-sub">Real-world products I've built from scratch</p>
+                <span class="section-tag">&lt; 03. PROJECTS /&gt;</span>
+                <h2 class="section-title">Production Flagships</h2>
+                <p class="section-sub">Full-scale applications built with modern frontend, backend, and AI architectures</p>
             </div>
 
-            <!-- ── Featured Project: Little Heart Beat ── -->
-            <div class="featured-project glass-card tilt-card" id="proj-featured">
-                <div class="fp-badge"><i class="fas fa-star"></i> Featured Project</div>
-                <div class="fp-body">
-                    <div class="fp-left">
-                        <div class="fp-number">01</div>
-                        <div class="project-icon-wrap fp-icon">
-                            <i class="fas fa-baby"></i>
-                        </div>
-                        <h3 class="fp-title">Little Heart Beat 👶</h3>
-                        <p class="fp-subtitle">AI-Powered Pregnancy & Motherhood Companion</p>
-                        <p class="fp-desc">
-                            An all-in-one platform for expecting mothers and their partners — featuring a <strong>Dual-Interface System</strong> (Mother Mode 🤱 vs. Partner Mode 👨‍👩‍👧), real-time health & vitals tracking, 3D hydration visualizer, AI consultation via Groq Llama 3 70B + Gemini, prenatal yoga hub, emergency SOS shake-to-trigger, digital time capsule, and native Android APK via Capacitor.
+            <!-- FEATURED FLAGSHIP: Little Heart Beat -->
+            <div class="flagship-card glass-card tilt-card" id="proj-heartbeat">
+                <div class="flagship-badge">
+                    <i class="fas fa-crown"></i> FEATURED FLAGSHIP PRODUCT
+                </div>
+                <div class="flagship-grid">
+                    <div class="flagship-info">
+                        <div class="proj-num">01 // PRODUCTION PWA</div>
+                        <h3 class="flagship-title">Little Heart Beat 👶</h3>
+                        <p class="flagship-subtitle">AI-Powered Pregnancy & Motherhood Companion Platform</p>
+
+                        <p class="flagship-desc">
+                            An all-in-one companion platform built with React 18, TypeScript, and Vite. Features a 
+                            <strong>Dual-Interface System</strong> (Mother Mode vs. Partner Companion Mode) with code-based account pairing, 
+                            3D interactive hydration bottle visualizer, AI doctor consultation using Groq Llama 3 70B & Gemini API, 
+                            shake-to-SOS emergency hotline, prenatal yoga player, digital time capsules, and native Android APK integration via Capacitor.
                         </p>
-                        <div class="fp-features">
-                            <span><i class="fas fa-check-circle"></i> Code-based partner pairing</span>
-                            <span><i class="fas fa-check-circle"></i> 3D Water Bottle widget</span>
-                            <span><i class="fas fa-check-circle"></i> Week 1→40 baby tracker</span>
-                            <span><i class="fas fa-check-circle"></i> Shake-to-SOS emergency</span>
-                            <span><i class="fas fa-check-circle"></i> AI multi-model chat</span>
-                            <span><i class="fas fa-check-circle"></i> Memory time capsule</span>
+
+                        <div class="flagship-highlights-grid">
+                            <div class="f-hl"><i class="fas fa-user-friends"></i> Dual-Interface Partner Pairing</div>
+                            <div class="f-hl"><i class="fas fa-tint"></i> 3D Hydration Visualizer</div>
+                            <div class="f-hl"><i class="fas fa-robot"></i> Groq Llama 3 & Gemini AI</div>
+                            <div class="f-hl"><i class="fas fa-first-aid"></i> Shake-to-SOS Emergency</div>
                         </div>
-                        <div class="fp-tags">
+
+                        <div class="flagship-tags">
                             <span>React 18</span><span>TypeScript</span><span>Vite</span>
                             <span>Supabase</span><span>Groq AI</span><span>Gemini API</span>
                             <span>Capacitor</span><span>Tailwind CSS</span><span>IndexedDB</span>
                         </div>
-                        <div class="fp-actions">
-                            <a href="https://personal-portfolio-gamma-gold-55.vercel.app/" target="_blank" class="btn-primary">
+
+                        <div class="flagship-actions">
+                            <a href="https://personal-portfolio-gamma-gold-55.vercel.app/" target="_blank" class="btn-cyber-primary">
                                 <i class="fas fa-external-link-alt"></i>
-                                <span>Live Demo</span>
+                                <span>LIVE DEMO</span>
                             </a>
-                            <a href="https://github.com/shettyadi57/Little-Heart-Beat--" target="_blank" class="btn-ghost">
+                            <a href="https://github.com/shettyadi57/Little-Heart-Beat--" target="_blank" class="btn-cyber-ghost">
                                 <i class="fab fa-github"></i>
-                                <span>Source Code</span>
+                                <span>GITHUB REPO</span>
                             </a>
                         </div>
                     </div>
-                    <div class="fp-right">
-                        <div class="fp-mockup">
-                            <div class="mockup-screen">
-                                <div class="mockup-bar">
-                                    <span class="mockup-dot red"></span>
-                                    <span class="mockup-dot yellow"></span>
-                                    <span class="mockup-dot green"></span>
-                                    <span class="mockup-url">little-heartbeat.vercel.app</span>
+
+                    <div class="flagship-mockup-wrapper">
+                        <div class="cyber-window-mockup">
+                            <div class="window-bar">
+                                <span class="w-dot red"></span>
+                                <span class="w-dot yellow"></span>
+                                <span class="w-dot green"></span>
+                                <span class="w-url">little-heartbeat.vercel.app</span>
+                            </div>
+                            <div class="window-body">
+                                <div class="mock-top-nav">
+                                    <span class="m-brand">👶 Little Heart Beat</span>
+                                    <span class="m-mode-badge">🤱 Mother Mode</span>
                                 </div>
-                                <div class="mockup-content">
-                                    <div class="mock-header">
-                                        <div class="mock-logo">💗 Little Heart Beat</div>
-                                        <div class="mock-badge-mode">🤱 Mother Mode</div>
+                                <div class="mock-progress-card">
+                                    <div class="m-prog-text">
+                                        <span>Pregnancy Progress</span>
+                                        <strong>Week 24 of 40 (60%)</strong>
                                     </div>
-                                    <div class="mock-week-bar">
-                                        <span class="mock-week-label">Week 24 of 40</span>
-                                        <div class="mock-progress-outer">
-                                            <div class="mock-progress-inner" style="width:60%"></div>
-                                        </div>
-                                        <span class="mock-week-pct">60%</span>
+                                    <div class="m-bar-bg"><div class="m-bar-fill"></div></div>
+                                </div>
+                                <div class="mock-vitals-row">
+                                    <div class="m-vital-box">
+                                        <i class="fas fa-tint text-cyan"></i>
+                                        <span class="mv-val">1.8L</span>
+                                        <span class="mv-lbl">Hydration</span>
                                     </div>
-                                    <div class="mock-cards-row">
-                                        <div class="mock-card pink">
-                                            <div class="mc-icon">💧</div>
-                                            <div class="mc-val">1.8L</div>
-                                            <div class="mc-lbl">Hydration</div>
-                                        </div>
-                                        <div class="mock-card purple">
-                                            <div class="mc-icon">👣</div>
-                                            <div class="mc-val">4,210</div>
-                                            <div class="mc-lbl">Steps</div>
-                                        </div>
-                                        <div class="mock-card teal">
-                                            <div class="mc-icon">❤️</div>
-                                            <div class="mc-val">142 BPM</div>
-                                            <div class="mc-lbl">Baby HR</div>
-                                        </div>
+                                    <div class="m-vital-box">
+                                        <i class="fas fa-heartbeat text-pink"></i>
+                                        <span class="mv-val">142 BPM</span>
+                                        <span class="mv-lbl">Fetal HR</span>
                                     </div>
-                                    <div class="mock-ai-bar">
-                                        <i class="fas fa-robot"></i>
-                                        <span>AI: "Stay hydrated! You're at 64% of your daily goal..."</span>
+                                    <div class="m-vital-box">
+                                        <i class="fas fa-shoe-prints text-green"></i>
+                                        <span class="mv-val">4,820</span>
+                                        <span class="mv-lbl">Steps</span>
                                     </div>
+                                </div>
+                                <div class="mock-ai-toast">
+                                    <i class="fas fa-robot text-purple"></i>
+                                    <span>AI Assistant: "Hydration target at 64%. Keep up the daily prenatal vitamin schedule!"</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="project-shine"></div>
             </div>
 
-            <!-- ── 2-Column Grid: ChronosAI + Smart Seva ── -->
-            <div class="projects-grid">
-                <!-- Project 2: ChronosAI -->
-                <div class="project-card glass-card tilt-card" id="proj-2">
-                    <div class="project-number">02</div>
-                    <div class="project-top">
-                        <div class="project-icon-wrap" style="background: linear-gradient(135deg, #7c3aed, #a855f7);">
-                            <i class="fas fa-camera"></i>
+            <!-- PROJECTS GRID: ChronosAI & Shivamogga Smart Seva -->
+            <div class="projects-2col-grid">
+                <!-- PROJECT 02: ChronosAI -->
+                <div class="project-cyber-card glass-card tilt-card" id="proj-chronos">
+                    <div class="pc-top">
+                        <div class="pc-icon-wrap icon-purple">
+                            <i class="fas fa-video"></i>
                         </div>
-                        <div class="project-links">
-                            <a href="https://github.com/shettyadi57" target="_blank" class="proj-link" aria-label="GitHub">
+                        <div class="pc-links">
+                            <a href="https://github.com/shettyadi57" target="_blank" class="pc-link" title="View Source">
                                 <i class="fab fa-github"></i>
                             </a>
                         </div>
                     </div>
-                    <h3 class="project-title">ChronosAI 🔍</h3>
-                    <p class="proj-type-badge"><i class="fas fa-shield-alt"></i> CCTV Forensics Platform</p>
-                    <p class="project-desc">Enterprise-grade, on-premise AI video analytics platform. Transforms raw CCTV footage into a searchable database — investigators query footage in natural language, filter by object class (Person, Vehicle, License Plate), and restore blurry evidence with the Forensic AI Blur-Free Super-Resolution Engine.</p>
-                    <div class="proj-highlights">
-                        <div class="proj-hl"><i class="fas fa-search"></i> Semantic NL search</div>
-                        <div class="proj-hl"><i class="fas fa-magic"></i> Lanczos4 Super-Res deblur</div>
-                        <div class="proj-hl"><i class="fas fa-file-pdf"></i> Court-ready PDF export</div>
-                        <div class="proj-hl"><i class="fas fa-clock"></i> 24-hr auto-purge system</div>
+
+                    <div class="pc-num">02 // AI VIDEO FORENSICS</div>
+                    <h3 class="pc-title">ChronosAI 🔍</h3>
+                    <p class="pc-tagline">Intelligent CCTV Forensics & Semantic Video Search</p>
+
+                    <p class="pc-desc">
+                        Lightweight, enterprise-grade on-premise CCTV video analytics platform. Transforms raw footage into a searchable 
+                        database where investigators search using natural language, filter object classes (Person, Vehicle, License Plate), 
+                        and enhance blurry evidence using the built-in <strong>Forensic AI Blur-Free Super-Resolution Engine</strong>.
+                    </p>
+
+                    <div class="pc-feature-list">
+                        <span><i class="fas fa-check text-cyan"></i> Natural Language Video Search</span>
+                        <span><i class="fas fa-check text-cyan"></i> Lanczos-4 Super-Res Deblur</span>
+                        <span><i class="fas fa-check text-cyan"></i> Court-Ready PDF Audit Reports</span>
+                        <span><i class="fas fa-check text-cyan"></i> Automated 24h Retention Auto-Purge</span>
                     </div>
-                    <div class="project-tags">
-                        <span>React</span><span>FastAPI</span><span>Python</span>
-                        <span>YOLOv8</span><span>OpenCV</span><span>SQLite</span><span>CLIP</span>
+
+                    <div class="pc-tech-tags">
+                        <span>React</span><span>FastAPI</span><span>YOLOv8</span>
+                        <span>OpenCV</span><span>SQLite</span><span>CLIP</span><span>ReportLab</span>
                     </div>
-                    <div class="project-shine"></div>
                 </div>
 
-                <!-- Project 3: Smart Seva -->
-                <div class="project-card glass-card tilt-card" id="proj-3">
-                    <div class="project-number">03</div>
-                    <div class="project-top">
-                        <div class="project-icon-wrap" style="background: linear-gradient(135deg, #059669, #10b981);">
-                            <i class="fas fa-id-card"></i>
+                <!-- PROJECT 03: Shivamogga Smart Seva -->
+                <div class="project-cyber-card glass-card tilt-card" id="proj-smartseva">
+                    <div class="pc-top">
+                        <div class="pc-icon-wrap icon-green">
+                            <i class="fas fa-landmark"></i>
                         </div>
-                        <div class="project-links">
-                            <a href="https://github.com/shettyadi57" target="_blank" class="proj-link" aria-label="GitHub">
+                        <div class="pc-links">
+                            <a href="https://github.com/shettyadi57" target="_blank" class="pc-link" title="View Source">
                                 <i class="fab fa-github"></i>
                             </a>
                         </div>
                     </div>
-                    <h3 class="project-title">Shivamogga Smart Seva 🏛️</h3>
-                    <p class="proj-type-badge"><i class="fas fa-landmark"></i> GovTech PWA · Karnataka</p>
-                    <p class="project-desc">Production-ready PWA for GramOne and Seva Sindhu service centers across Shivamogga District, Karnataka. Geo-detects nearest offices, enables multi-step Aadhaar-based token booking, priority queue for senior citizens & PwD, live WebSocket queue tracking, and AI-based Tatkal prediction engine.</p>
-                    <div class="proj-highlights">
-                        <div class="proj-hl"><i class="fas fa-map-marker-alt"></i> Geolocation office finder</div>
-                        <div class="proj-hl"><i class="fas fa-users"></i> Priority queue engine</div>
-                        <div class="proj-hl"><i class="fas fa-qrcode"></i> Digital token + PDF</div>
-                        <div class="proj-hl"><i class="fas fa-broadcast-tower"></i> WebSocket live board</div>
+
+                    <div class="pc-num">03 // GOVTECH PWA PLATFORM</div>
+                    <h3 class="pc-title">Shivamogga Smart Seva 🏛️</h3>
+                    <p class="pc-tagline">District Public Service Center Token Management Engine</p>
+
+                    <p class="pc-desc">
+                        Production-grade Progressive Web Application (PWA) built for GramOne & Seva Sindhu public centers in Shivamogga District. 
+                        Features automatic geolocation nearest-office detection on Leaflet maps, multi-step Aadhaar token booking, priority queues 
+                        for senior citizens & pregnant women, live WebSocket queue tracking boards, and AI Tatkal prediction algorithms.
+                    </p>
+
+                    <div class="pc-feature-list">
+                        <span><i class="fas fa-check text-green"></i> Geolocation Distance Matrix & Maps</span>
+                        <span><i class="fas fa-check text-green"></i> Aadhaar Verification & OTP Auth</span>
+                        <span><i class="fas fa-check text-green"></i> Priority Queue & Tatkal Engine</span>
+                        <span><i class="fas fa-check text-green"></i> Live WebSocket Counter Board</span>
                     </div>
-                    <div class="project-tags">
+
+                    <div class="pc-tech-tags">
                         <span>React 18</span><span>TypeScript</span><span>FastAPI</span>
                         <span>PostgreSQL</span><span>Docker</span><span>Nginx</span><span>Leaflet</span>
                     </div>
-                    <div class="project-shine"></div>
                 </div>
             </div>
 
-            <div class="projects-cta">
-                <a href="https://github.com/shettyadi57" target="_blank" class="btn-outline-neon">
+            <div class="projects-cta-box">
+                <a href="https://github.com/shettyadi57" target="_blank" class="btn-cyber-outline">
                     <i class="fab fa-github"></i>
-                    <span>View All on GitHub</span>
+                    <span>VIEW COMPLETE GITHUB REPOSITORY PORTFOLIO</span>
                     <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
         </div>
     </section>
 
-    <!-- ═══════════════ ACHIEVEMENTS ═══════════════ -->
+    <!-- ═══════════════ ACHIEVEMENTS SECTION ═══════════════ -->
     <section id="achievements" class="achievements">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-tag">04. Awards</span>
-                <h2 class="section-title">Achievements</h2>
-                <p class="section-sub">Recognition & competition wins</p>
+                <span class="section-tag">&lt; 04. AWARDS /&gt;</span>
+                <h2 class="section-title">Honors & Competitions</h2>
+                <p class="section-sub">Competitive coding accolades and hackathon recognitions</p>
             </div>
 
             <div class="achievements-grid">
-                <div class="achievement-card glass-card tilt-card">
-                    <div class="ach-rank gold">🥇</div>
-                    <div class="ach-content">
-                        <h3>1st Place — Code Neura 2025</h3>
-                        <p>Won first place in the district-level coding competition showcasing problem-solving and algorithmic thinking.</p>
-                        <span class="ach-date">October 2025</span>
+                <div class="award-cyber-card glass-card tilt-card">
+                    <div class="award-badge gold"><i class="fas fa-trophy"></i> 1ST PLACE</div>
+                    <div class="award-body">
+                        <h3>Code Neura 2025</h3>
+                        <p class="award-desc">1st Place winner in the District-Level Coding Competition showcasing advanced algorithmic problem-solving and rapid data structure implementation.</p>
+                        <span class="award-date"><i class="far fa-calendar-alt"></i> October 2025</span>
                     </div>
-                    <div class="ach-glow gold-glow"></div>
-                    <div class="project-shine"></div>
                 </div>
 
-                <div class="achievement-card glass-card tilt-card">
-                    <div class="ach-rank gold">🥇</div>
-                    <div class="ach-content">
-                        <h3>1st Place — Green IT 2025</h3>
-                        <p>Won first place in the intra-college Green IT competition for sustainable technology innovation.</p>
-                        <span class="ach-date">February 2026</span>
+                <div class="award-cyber-card glass-card tilt-card">
+                    <div class="award-badge gold"><i class="fas fa-trophy"></i> 1ST PLACE</div>
+                    <div class="award-body">
+                        <h3>Green IT Competition 2025</h3>
+                        <p class="award-desc">1st Place winner in the Intra-College Technology Innovation competition for sustainable green software engineering designs.</p>
+                        <span class="award-date"><i class="far fa-calendar-alt"></i> February 2026</span>
                     </div>
-                    <div class="ach-glow gold-glow"></div>
-                    <div class="project-shine"></div>
                 </div>
 
-                <div class="achievement-card glass-card tilt-card">
-                    <div class="ach-rank silver">🥈</div>
-                    <div class="ach-content">
-                        <h3>Runner-Up — Tech Carnival 2K26</h3>
-                        <p>National-level Hackathon Runner-Up, competing against teams from top colleges across India.</p>
-                        <span class="ach-date">2026</span>
+                <div class="award-cyber-card glass-card tilt-card">
+                    <div class="award-badge silver"><i class="fas fa-medal"></i> RUNNER UP</div>
+                    <div class="award-body">
+                        <h3>Tech Carnival 2K26 Hackathon</h3>
+                        <p class="award-desc">National-Level Hackathon Runner-Up competing against teams from top engineering institutions across India.</p>
+                        <span class="award-date"><i class="far fa-calendar-alt"></i> 2026</span>
                     </div>
-                    <div class="ach-glow silver-glow"></div>
-                    <div class="project-shine"></div>
                 </div>
 
-                <div class="achievement-card glass-card tilt-card">
-                    <div class="ach-rank silver">🥈</div>
-                    <div class="ach-content">
-                        <h3>Runner-Up — Code Nebula 2025</h3>
-                        <p>College-level coding competition runner-up, demonstrating strong DSA and problem-solving skills.</p>
-                        <span class="ach-date">2025</span>
+                <div class="award-cyber-card glass-card tilt-card">
+                    <div class="award-badge silver"><i class="fas fa-medal"></i> RUNNER UP</div>
+                    <div class="award-body">
+                        <h3>Code Nebula 2025</h3>
+                        <p class="award-desc">Runner-up in the annual college competitive coding challenge, demonstrating high accuracy under time constraints.</p>
+                        <span class="award-date"><i class="far fa-calendar-alt"></i> 2025</span>
                     </div>
-                    <div class="ach-glow silver-glow"></div>
-                    <div class="project-shine"></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- ═══════════════ EDUCATION ═══════════════ -->
+    <!-- ═══════════════ EDUCATION SECTION ═══════════════ -->
     <section id="education" class="education">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-tag">05. Education</span>
-                <h2 class="section-title">Academic Journey</h2>
-                <p class="section-sub">My educational background and qualifications</p>
+                <span class="section-tag">&lt; 05. ACADEMICS /&gt;</span>
+                <h2 class="section-title">Education & Milestones</h2>
+                <p class="section-sub">Academic qualifications and computer science coursework</p>
             </div>
 
-            <div class="timeline">
-                <div class="timeline-line"></div>
+            <div class="cyber-timeline">
+                <div class="timeline-stem"></div>
 
-                <div class="timeline-item">
-                    <div class="timeline-dot">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    <div class="timeline-card glass-card">
-                        <div class="tc-header">
-                            <span class="tc-year">2024 — Present</span>
-                            <span class="tc-badge active">Current</span>
-                        </div>
+                <div class="timeline-node glass-card tilt-card">
+                    <div class="tn-icon"><i class="fas fa-graduation-cap"></i></div>
+                    <div class="tn-content">
+                        <div class="tn-time">2024 — PRESENT <span class="tn-status">IN PROGRESS</span></div>
                         <h3>Bachelor of Computer Applications (BCA)</h3>
-                        <h4>Kuvempu University</h4>
-                        <p>Focusing on computer science fundamentals, programming, and full-stack development. Actively participating in competitions and hackathons.</p>
-                        <div class="tc-meta">
-                            <span><i class="fas fa-star"></i> CGPA: 7.67</span>
-                            <span><i class="fas fa-map-marker-alt"></i> Shimoga, Karnataka</span>
+                        <h4>Kuvempu University, Karnataka</h4>
+                        <p>Core focus on Data Structures & Algorithms, Object-Oriented Programming, Database Systems, Web Engineering, and Artificial Intelligence.</p>
+                        <div class="tn-stats">
+                            <span class="tn-chip"><i class="fas fa-star text-gold"></i> CGPA: 7.67 / 10.0</span>
+                            <span class="tn-chip"><i class="fas fa-map-marker-alt"></i> Shivamogga, KA</span>
                         </div>
                     </div>
                 </div>
@@ -624,79 +718,75 @@
         </div>
     </section>
 
-    <!-- ═══════════════ CONTACT ═══════════════ -->
+    <!-- ═══════════════ CONTACT SECTION ═══════════════ -->
     <section id="contact" class="contact">
         <div class="section-container">
             <div class="section-header">
-                <span class="section-tag">06. Contact</span>
-                <h2 class="section-title">Let's Connect</h2>
-                <p class="section-sub">Have an opportunity or just want to say hi?</p>
+                <span class="section-tag">&lt; 06. CONTACT /&gt;</span>
+                <h2 class="section-title">Initialize Contact</h2>
+                <p class="section-sub">Available for full-time opportunities, internships, and high-impact engineering projects</p>
             </div>
 
             <div class="contact-grid">
-                <div class="contact-info glass-card">
-                    <h3>Open to Opportunities</h3>
-                    <p>I'm currently looking for internships, collaborations, and freelance projects. My inbox is always open!</p>
+                <div class="contact-card glass-card">
+                    <h3>DIRECT CHANNELS</h3>
+                    <p>Feel free to reach out via email or phone. I usually respond within a few hours.</p>
 
-                    <div class="contact-methods">
-                        <a href="mailto:shettyadithyas57@gmail.com" class="contact-method">
-                            <div class="cm-icon"><i class="fas fa-envelope"></i></div>
-                            <div class="cm-text">
-                                <span class="cm-label">Email</span>
-                                <span class="cm-value">shettyadithyas57@gmail.com</span>
+                    <div class="contact-list">
+                        <a href="mailto:shettyadithyas57@gmail.com" class="c-link-box">
+                            <div class="cl-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="cl-details">
+                                <span class="cl-label">EMAIL ADDRESS</span>
+                                <span class="cl-val">shettyadithyas57@gmail.com</span>
                             </div>
-                            <i class="fas fa-arrow-right cm-arrow"></i>
                         </a>
-                        <a href="tel:+918088716254" class="contact-method">
-                            <div class="cm-icon"><i class="fas fa-phone"></i></div>
-                            <div class="cm-text">
-                                <span class="cm-label">Phone</span>
-                                <span class="cm-value">+91 8088716254</span>
+                        <a href="tel:+918088716254" class="c-link-box">
+                            <div class="cl-icon"><i class="fas fa-phone"></i></div>
+                            <div class="cl-details">
+                                <span class="cl-label">PHONE NUMBER</span>
+                                <span class="cl-val">+91 8088716254</span>
                             </div>
-                            <i class="fas fa-arrow-right cm-arrow"></i>
                         </a>
-                        <a href="https://www.linkedin.com/in/adithya-s-shetty-99b810331/" target="_blank" class="contact-method">
-                            <div class="cm-icon"><i class="fab fa-linkedin-in"></i></div>
-                            <div class="cm-text">
-                                <span class="cm-label">LinkedIn</span>
-                                <span class="cm-value">Adithya S Shetty</span>
+                        <a href="https://www.linkedin.com/in/adithya-s-shetty-99b810331/" target="_blank" class="c-link-box">
+                            <div class="cl-icon"><i class="fab fa-linkedin-in"></i></div>
+                            <div class="cl-details">
+                                <span class="cl-label">LINKEDIN PROFILE</span>
+                                <span class="cl-val">adithya-s-shetty</span>
                             </div>
-                            <i class="fas fa-arrow-right cm-arrow"></i>
                         </a>
-                        <a href="https://github.com/shettyadi57" target="_blank" class="contact-method">
-                            <div class="cm-icon"><i class="fab fa-github"></i></div>
-                            <div class="cm-text">
-                                <span class="cm-label">GitHub</span>
-                                <span class="cm-value">@shettyadi57</span>
+                        <a href="https://github.com/shettyadi57" target="_blank" class="c-link-box">
+                            <div class="cl-icon"><i class="fab fa-github"></i></div>
+                            <div class="cl-details">
+                                <span class="cl-label">GITHUB HANDLE</span>
+                                <span class="cl-val">@shettyadi57</span>
                             </div>
-                            <i class="fas fa-arrow-right cm-arrow"></i>
                         </a>
                     </div>
                 </div>
 
-                <div class="contact-form-wrap glass-card">
-                    <h3>Send a Message</h3>
+                <div class="contact-form-card glass-card">
+                    <h3>SEND DIRECT MESSAGE</h3>
                     <form id="contactForm">
                         <div class="form-row">
-                            <div class="form-group">
-                                <label for="name">Full Name</label>
-                                <input type="text" id="name" placeholder="John Doe" required>
+                            <div class="form-field">
+                                <label for="name">YOUR NAME</label>
+                                <input type="text" id="name" placeholder="e.g. Elon Musk" required>
                             </div>
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" id="email" placeholder="john@example.com" required>
+                            <div class="form-field">
+                                <label for="email">YOUR EMAIL</label>
+                                <input type="email" id="email" placeholder="e.g. elon@x.com" required>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label for="subject">Subject</label>
-                            <input type="text" id="subject" placeholder="Internship Opportunity" required>
+                        <div class="form-field">
+                            <label for="subject">SUBJECT</label>
+                            <input type="text" id="subject" placeholder="Project Inquiry / Job Offer" required>
                         </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" rows="5" placeholder="Hi Adithya, I'd love to..." required></textarea>
+                        <div class="form-field">
+                            <label for="message">MESSAGE</label>
+                            <textarea id="message" rows="5" placeholder="Hi Adithya, we would love to collaborate on..." required></textarea>
                         </div>
-                        <button type="submit" class="btn-primary full-width" id="submit-btn">
-                            <span>Send Message</span>
+                        <button type="submit" class="btn-cyber-primary full-btn" id="submit-btn">
+                            <span>TRANSMIT MESSAGE</span>
                             <i class="fas fa-paper-plane"></i>
                         </button>
                     </form>
@@ -708,27 +798,18 @@
     <!-- ═══════════════ FOOTER ═══════════════ -->
     <footer class="footer">
         <div class="footer-container">
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <span class="logo-bracket">&lt;</span>
-                    <span class="logo-name">Adithya</span>
-                    <span class="logo-slash">/</span>
-                    <span class="logo-bracket">&gt;</span>
-                </div>
-                <p class="footer-tagline">Building the future, one line at a time.</p>
+            <div class="footer-brand">&lt; ADITHYA S SHETTY /&gt;</div>
+            <p class="footer-text">Designed & Developed with 3D WebGL, React Concepts, and Vanilla JavaScript.</p>
+            <div class="footer-socials">
+                <a href="https://github.com/shettyadi57" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/adithya-s-shetty-99b810331/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                <a href="mailto:shettyadithyas57@gmail.com"><i class="fas fa-envelope"></i></a>
             </div>
-            <div class="footer-social">
-                <a href="https://github.com/shettyadi57" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://www.linkedin.com/in/adithya-s-shetty-99b810331/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-                <a href="mailto:shettyadithyas57@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2026 Adithya S Shetty. Crafted with <span class="heart">♥</span> and lots of coffee.</p>
-            </div>
+            <div class="footer-copy">© 2026 Adithya S Shetty. All Rights Reserved.</div>
         </div>
     </footer>
 
-    <!-- Three.js CDN -->
+    <!-- Three.js 3D WebGL Engine -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="script.js"></script>
 </body>

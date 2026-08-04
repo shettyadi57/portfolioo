@@ -1,558 +1,466 @@
 /**
- * ADITHYA S SHETTY — PREMIUM PORTFOLIO SCRIPT
- * Features: Three.js 3D Particles, Custom Cursor, Tilt Cards,
- *           Smooth Scroll, Reveal Animations, Proficiency Bars
+ * ADITHYA S SHETTY — 8K 3D WEBGL CYBER PORTFOLIO ENGINE
+ * Technologies: Three.js 3D Engine, Web Audio API Synth, Interactive Hacker CLI, 3D Tilt
  */
 
 'use strict';
 
 /* ══════════════════════════════════════════════
-   1. LOADER
+   1. LOADER & INITIALIZATION
 ══════════════════════════════════════════════ */
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
     const loader = document.getElementById('loader');
-    setTimeout(() => {
-        loader.classList.add('hidden');
-        document.body.style.overflow = '';
-        initRevealObserver();
-    }, 1200);
+    const loaderBar = document.getElementById('loader-bar');
+    const loaderStatus = document.getElementById('loader-status');
+
+    const loadingSteps = [
+        { pct: 30, text: 'LOADING 3D WEBGL SHADERS...' },
+        { pct: 60, text: 'SYNTHESIZING SFX AUDIO ENGINE...' },
+        { pct: 90, text: 'MOUNTING HACKER CLI TERMINAL...' },
+        { pct: 100, text: 'SYSTEM ONLINE // READY' }
+    ];
+
+    let stepIdx = 0;
+    const loadInterval = setInterval(() => {
+        if (stepIdx < loadingSteps.length) {
+            const step = loadingSteps[stepIdx];
+            if (loaderBar) loaderBar.style.width = `${step.pct}%`;
+            if (loaderStatus) loaderStatus.textContent = step.text;
+            stepIdx++;
+        } else {
+            clearInterval(loadInterval);
+            setTimeout(() => {
+                if (loader) loader.classList.add('hidden');
+                initMeterObserver();
+                initCounters();
+            }, 500);
+        }
+    }, 250);
 });
 
-// Prevent scroll during load
-document.body.style.overflow = 'hidden';
+/* ══════════════════════════════════════════════
+   2. WEB AUDIO SFX SYNTHESIZER
+══════════════════════════════════════════════ */
+let audioCtx = null;
+let soundEnabled = true;
 
+function initAudio() {
+    if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    }
+}
+
+function playSynthTone(freq, type = 'sine', duration = 0.08, gainVal = 0.05) {
+    if (!soundEnabled) return;
+    try {
+        initAudio();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+
+        gain.gain.setValueAtTime(gainVal, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + duration);
+    } catch (e) {
+        // Audio context fallback
+    }
+}
+
+// Sound FX bindings
+const soundToggleBtn = document.getElementById('sound-toggle');
+const soundIcon = document.getElementById('sound-icon');
+
+if (soundToggleBtn) {
+    soundToggleBtn.addEventListener('click', () => {
+        soundEnabled = !soundEnabled;
+        if (soundIcon) {
+            soundIcon.className = soundEnabled ? 'fas fa-volume-up' : 'fas fa-volume-mute';
+        }
+        if (soundEnabled) playSynthTone(880, 'sine', 0.1);
+    });
+}
+
+// Bind SFX to buttons & links
+document.querySelectorAll('button, a, .glass-card').forEach(el => {
+    el.addEventListener('mouseenter', () => playSynthTone(600, 'sine', 0.04, 0.02));
+    el.addEventListener('click', () => playSynthTone(900, 'triangle', 0.08, 0.04));
+});
 
 /* ══════════════════════════════════════════════
-   2. CUSTOM CURSOR
+   3. CUSTOM CURSOR & FPS COUNTER
 ══════════════════════════════════════════════ */
 const cursorDot = document.getElementById('cursor-dot');
 const cursorOutline = document.getElementById('cursor-outline');
 
-let cursorX = -100, cursorY = -100;
+let mouseX = -100, mouseY = -100;
 let outlineX = -100, outlineY = -100;
-let animFrame;
 
 document.addEventListener('mousemove', (e) => {
-    cursorX = e.clientX;
-    cursorY = e.clientY;
-    cursorDot.style.left = `${cursorX}px`;
-    cursorDot.style.top = `${cursorY}px`;
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+
+    if (cursorDot) {
+        cursorDot.style.left = `${mouseX}px`;
+        cursorDot.style.top = `${mouseY}px`;
+    }
 });
 
 function animateCursor() {
-    outlineX += (cursorX - outlineX) * 0.12;
-    outlineY += (cursorY - outlineY) * 0.12;
-    cursorOutline.style.left = `${outlineX}px`;
-    cursorOutline.style.top = `${outlineY}px`;
-    animFrame = requestAnimationFrame(animateCursor);
+    outlineX += (mouseX - outlineX) * 0.15;
+    outlineY += (mouseY - outlineY) * 0.15;
+
+    if (cursorOutline) {
+        cursorOutline.style.left = `${outlineX}px`;
+        cursorOutline.style.top = `${outlineY}px`;
+    }
+    requestAnimationFrame(animateCursor);
 }
 animateCursor();
 
-document.addEventListener('mouseleave', () => {
-    cursorDot.style.opacity = '0';
-    cursorOutline.style.opacity = '0';
-});
+// FPS Counter
+let frameCount = 0;
+let lastTime = performance.now();
+const fpsCounter = document.getElementById('fps-counter');
 
-document.addEventListener('mouseenter', () => {
-    cursorDot.style.opacity = '1';
-    cursorOutline.style.opacity = '1';
-});
-
+function updateFPS() {
+    frameCount++;
+    const now = performance.now();
+    if (now - lastTime >= 1000) {
+        if (fpsCounter) fpsCounter.textContent = Math.round((frameCount * 1000) / (now - lastTime));
+        frameCount = 0;
+        lastTime = now;
+    }
+    requestAnimationFrame(updateFPS);
+}
+updateFPS();
 
 /* ══════════════════════════════════════════════
-   3. THREE.JS 3D PARTICLE BACKGROUND
+   4. THREE.JS 3D WEBGL SCENE
 ══════════════════════════════════════════════ */
-function initThreeBackground() {
+function initThreeWebGL() {
     if (typeof THREE === 'undefined') return;
 
     const canvas = document.getElementById('bg-canvas');
+    if (!canvas) return;
+
     const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setClearColor(0x000000, 0);
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.z = 80;
+    camera.position.z = 70;
 
-    // ── Particle System 1: Stars ──
-    const starCount = 1500;
+    // ── Layer 1: 3D Starfield Particles ──
+    const starCount = 2000;
     const starGeo = new THREE.BufferGeometry();
-    const starPositions = new Float32Array(starCount * 3);
-    const starSizes = new Float32Array(starCount);
+    const starPos = new Float32Array(starCount * 3);
 
     for (let i = 0; i < starCount; i++) {
-        starPositions[i * 3]     = (Math.random() - 0.5) * 400;
-        starPositions[i * 3 + 1] = (Math.random() - 0.5) * 400;
-        starPositions[i * 3 + 2] = (Math.random() - 0.5) * 400;
-        starSizes[i] = Math.random() * 1.5 + 0.3;
+        starPos[i * 3] = (Math.random() - 0.5) * 350;
+        starPos[i * 3 + 1] = (Math.random() - 0.5) * 350;
+        starPos[i * 3 + 2] = (Math.random() - 0.5) * 350;
     }
-
-    starGeo.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
-    starGeo.setAttribute('size', new THREE.BufferAttribute(starSizes, 1));
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
 
     const starMat = new THREE.PointsMaterial({
-        color: 0xaad4ff,
-        size: 0.5,
+        color: 0x00f3ff,
+        size: 0.6,
         transparent: true,
-        opacity: 0.6,
-        sizeAttenuation: true,
+        opacity: 0.7,
     });
+    const starField = new THREE.Points(starGeo, starMat);
+    scene.add(starField);
 
-    const stars = new THREE.Points(starGeo, starMat);
-    scene.add(stars);
-
-    // ── Particle System 2: Neon floating nodes ──
-    const nodeCount = 200;
-    const nodeGeo = new THREE.BufferGeometry();
-    const nodePositions = new Float32Array(nodeCount * 3);
-    const nodeVelocities = [];
-
-    for (let i = 0; i < nodeCount; i++) {
-        nodePositions[i * 3]     = (Math.random() - 0.5) * 160;
-        nodePositions[i * 3 + 1] = (Math.random() - 0.5) * 160;
-        nodePositions[i * 3 + 2] = (Math.random() - 0.5) * 80;
-        nodeVelocities.push({
-            x: (Math.random() - 0.5) * 0.02,
-            y: (Math.random() - 0.5) * 0.02,
-            z: (Math.random() - 0.5) * 0.01,
-        });
-    }
-
-    nodeGeo.setAttribute('position', new THREE.BufferAttribute(nodePositions, 3));
-
-    const nodeMat = new THREE.PointsMaterial({
-        color: 0x00d4ff,
-        size: 1.0,
-        transparent: true,
-        opacity: 0.8,
-        sizeAttenuation: true,
-    });
-
-    const nodes = new THREE.Points(nodeGeo, nodeMat);
-    scene.add(nodes);
-
-    // ── Connection Lines ──
-    const linePositions = [];
-    const lineMat = new THREE.LineBasicMaterial({
-        color: 0x00d4ff,
-        transparent: true,
-        opacity: 0.04,
-    });
-
-    // Create a few static connections
-    for (let i = 0; i < 30; i++) {
-        const i1 = Math.floor(Math.random() * nodeCount);
-        const i2 = Math.floor(Math.random() * nodeCount);
-        const geoLine = new THREE.BufferGeometry().setFromPoints([
-            new THREE.Vector3(
-                nodePositions[i1 * 3],
-                nodePositions[i1 * 3 + 1],
-                nodePositions[i1 * 3 + 2]
-            ),
-            new THREE.Vector3(
-                nodePositions[i2 * 3],
-                nodePositions[i2 * 3 + 1],
-                nodePositions[i2 * 3 + 2]
-            )
-        ]);
-        scene.add(new THREE.Line(geoLine, lineMat));
-    }
-
-    // ── Floating Geometric Shape ──
-    const icosaGeo = new THREE.IcosahedronGeometry(12, 1);
-    const icosaMat = new THREE.MeshBasicMaterial({
-        color: 0x00d4ff,
+    // ── Layer 2: Undulating 3D Cyber Mesh ──
+    const meshGeo = new THREE.PlaneGeometry(160, 160, 32, 32);
+    const meshMat = new THREE.MeshBasicMaterial({
+        color: 0x9d4edd,
         wireframe: true,
         transparent: true,
-        opacity: 0.04,
+        opacity: 0.12,
     });
-    const icosa = new THREE.Mesh(icosaGeo, icosaMat);
-    icosa.position.set(60, -20, -40);
-    scene.add(icosa);
+    const cyberMesh = new THREE.Mesh(meshGeo, meshMat);
+    cyberMesh.rotation.x = -Math.PI / 2.5;
+    cyberMesh.position.y = -35;
+    scene.add(cyberMesh);
 
-    const torus2Geo = new THREE.TorusGeometry(20, 0.5, 8, 60);
-    const torusMat = new THREE.MeshBasicMaterial({
-        color: 0xa855f7,
+    // ── Layer 3: Interactive Metallic Crystal ──
+    const crystalGeo = new THREE.OctahedronGeometry(10, 2);
+    const crystalMat = new THREE.MeshBasicMaterial({
+        color: 0x00f3ff,
+        wireframe: true,
         transparent: true,
-        opacity: 0.06,
+        opacity: 0.25,
     });
-    const torus2 = new THREE.Mesh(torus2Geo, torusMat);
-    torus2.position.set(-60, 30, -60);
-    scene.add(torus2);
+    const crystal = new THREE.Mesh(crystalGeo, crystalMat);
+    crystal.position.set(45, 10, -20);
+    scene.add(crystal);
 
-    // Mouse interaction
-    let mouseX = 0, mouseY = 0;
-    document.addEventListener('mousemove', (e) => {
-        mouseX = (e.clientX / window.innerWidth - 0.5) * 0.5;
-        mouseY = (e.clientY / window.innerHeight - 0.5) * 0.5;
+    // ── Layer 4: Interactive Click Particle Burst ──
+    const burstCount = 60;
+    const burstGeo = new THREE.BufferGeometry();
+    const burstPos = new Float32Array(burstCount * 3);
+    const burstVels = [];
+
+    for (let i = 0; i < burstCount; i++) {
+        burstPos[i * 3] = 0;
+        burstPos[i * 3 + 1] = 0;
+        burstPos[i * 3 + 2] = 0;
+        burstVels.push({
+            x: (Math.random() - 0.5) * 0.8,
+            y: (Math.random() - 0.5) * 0.8,
+            z: (Math.random() - 0.5) * 0.8,
+        });
+    }
+    burstGeo.setAttribute('position', new THREE.BufferAttribute(burstPos, 3));
+    const burstMat = new THREE.PointsMaterial({
+        color: 0xff007f,
+        size: 1.2,
+        transparent: true,
+        opacity: 0,
     });
+    const burstParticles = new THREE.Points(burstGeo, burstMat);
+    scene.add(burstParticles);
 
-    let scrollY = 0;
-    window.addEventListener('scroll', () => {
-        scrollY = window.scrollY;
-    });
+    // Click to Trigger Burst
+    window.addEventListener('click', (e) => {
+        const mouseVec = new THREE.Vector3(
+            (e.clientX / window.innerWidth) * 2 - 1,
+            -(e.clientY / window.innerHeight) * 2 + 1,
+            0.5
+        );
+        mouseVec.unproject(camera);
+        const dir = mouseVec.sub(camera.position).normalize();
+        const distance = -camera.position.z / dir.z;
+        const pos = camera.position.clone().add(dir.multiplyScalar(distance));
 
-    // ── Animation Loop ──
-    let t = 0;
-    function animate() {
-        requestAnimationFrame(animate);
-        t += 0.005;
-
-        // Rotate star field
-        stars.rotation.y = t * 0.03;
-        stars.rotation.x = t * 0.01;
-
-        // Animate nodes
-        const pos = nodeGeo.attributes.position.array;
-        for (let i = 0; i < nodeCount; i++) {
-            pos[i * 3]     += nodeVelocities[i].x;
-            pos[i * 3 + 1] += nodeVelocities[i].y;
-            pos[i * 3 + 2] += nodeVelocities[i].z;
-
-            // Boundary wrap
-            if (Math.abs(pos[i * 3])     > 80) nodeVelocities[i].x *= -1;
-            if (Math.abs(pos[i * 3 + 1]) > 80) nodeVelocities[i].y *= -1;
-            if (Math.abs(pos[i * 3 + 2]) > 40) nodeVelocities[i].z *= -1;
+        const positions = burstGeo.attributes.position.array;
+        for (let i = 0; i < burstCount; i++) {
+            positions[i * 3] = pos.x;
+            positions[i * 3 + 1] = pos.y;
+            positions[i * 3 + 2] = pos.z;
         }
-        nodeGeo.attributes.position.needsUpdate = true;
+        burstGeo.attributes.position.needsUpdate = true;
+        burstMat.opacity = 1.0;
+    });
 
-        // Rotate geometries
-        icosa.rotation.x = t * 0.5;
-        icosa.rotation.y = t * 0.3;
-        torus2.rotation.x = t * 0.2;
-        torus2.rotation.z = t * 0.1;
+    // Mouse Interaction
+    let normMouseX = 0, normMouseY = 0;
+    window.addEventListener('mousemove', (e) => {
+        normMouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        normMouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+    });
 
-        // Smooth camera follow mouse
-        camera.position.x += (mouseX * 8 - camera.position.x) * 0.05;
-        camera.position.y += (-mouseY * 8 - camera.position.y) * 0.05;
+    // Animation Loop
+    let clock = 0;
+    function animate3D() {
+        requestAnimationFrame(animate3D);
+        clock += 0.01;
+
+        // Rotate starfield
+        starField.rotation.y = clock * 0.02;
+        starField.rotation.x = clock * 0.01;
+
+        // Wave mesh movement
+        const vertices = meshGeo.attributes.position.array;
+        for (let i = 0; i < vertices.length; i += 3) {
+            vertices[i + 2] = Math.sin(clock + vertices[i] * 0.1) * 3;
+        }
+        meshGeo.attributes.position.needsUpdate = true;
+
+        // Rotate crystal
+        crystal.rotation.x = clock * 0.5;
+        crystal.rotation.y = clock * 0.8;
+
+        // Update Click Burst
+        if (burstMat.opacity > 0) {
+            const bPos = burstGeo.attributes.position.array;
+            for (let i = 0; i < burstCount; i++) {
+                bPos[i * 3] += burstVels[i].x;
+                bPos[i * 3 + 1] += burstVels[i].y;
+                bPos[i * 3 + 2] += burstVels[i].z;
+            }
+            burstGeo.attributes.position.needsUpdate = true;
+            burstMat.opacity -= 0.025;
+        }
+
+        // Camera follow mouse
+        camera.position.x += (normMouseX * 5 - camera.position.x) * 0.05;
+        camera.position.y += (-normMouseY * 5 - camera.position.y) * 0.05;
         camera.lookAt(scene.position);
-
-        // Scroll parallax
-        scene.position.y = scrollY * 0.03;
 
         renderer.render(scene, camera);
     }
-
-    animate();
+    animate3D();
 
     // Resize
     window.addEventListener('resize', () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    });
+}
+initThreeWebGL();
+
+/* ══════════════════════════════════════════════
+   5. HACKER CLI TERMINAL MODAL LOGIC
+══════════════════════════════════════════════ */
+const terminalModal = document.getElementById('terminal-modal');
+const terminalToggle = document.getElementById('terminal-toggle');
+const termClose = document.getElementById('term-close');
+const terminalInput = document.getElementById('terminal-input');
+const terminalBody = document.getElementById('terminal-body');
+
+if (terminalToggle) {
+    terminalToggle.addEventListener('click', () => {
+        terminalModal.classList.add('open');
+        if (terminalInput) terminalInput.focus();
     });
 }
 
-initThreeBackground();
-
-
-/* ══════════════════════════════════════════════
-   4. SCROLL PROGRESS BAR
-══════════════════════════════════════════════ */
-const progressBar = document.createElement('div');
-progressBar.className = 'scroll-progress';
-document.body.prepend(progressBar);
-
-window.addEventListener('scroll', () => {
-    const pct = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-    progressBar.style.width = `${pct}%`;
-});
-
-
-/* ══════════════════════════════════════════════
-   5. STICKY HEADER
-══════════════════════════════════════════════ */
-const header = document.getElementById('header');
-
-window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 20);
-});
-
-
-/* ══════════════════════════════════════════════
-   6. MOBILE MENU
-══════════════════════════════════════════════ */
-const hamburger = document.getElementById('hamburger');
-const mobileMenu = document.getElementById('mobile-menu');
-const mobileClose = document.getElementById('mobile-close');
-const mobileLinks = document.querySelectorAll('.mobile-link');
-
-function openMenu() {
-    hamburger.classList.add('open');
-    mobileMenu.classList.add('open');
-    document.body.style.overflow = 'hidden';
+if (termClose) {
+    termClose.addEventListener('click', () => {
+        terminalModal.classList.remove('open');
+    });
 }
 
-function closeMenu() {
-    hamburger.classList.remove('open');
-    mobileMenu.classList.remove('open');
-    document.body.style.overflow = '';
-}
+const commands = {
+    help: 'Available commands: projects, skills, bio, contact, matrix, clear, exit',
+    projects: '1. Little Heart Beat (AI Pregnancy Companion)\n2. ChronosAI (CCTV Forensics Platform)\n3. Shivamogga Smart Seva (GovTech PWA)',
+    skills: 'Languages: Python, TypeScript, JS, HTML/CSS, SQL, C\nFrameworks: React 18, FastAPI, Flask, OpenCV, YOLOv8\nTools: Docker, Supabase, Git, Linux',
+    bio: 'Adithya S Shetty — 2nd Year BCA Student @ Kuvempu University. District Coding Champion & Full-Stack Engineer.',
+    contact: 'Email: shettyadithyas57@gmail.com | Phone: +91 8088716254 | GitHub: @shettyadi57',
+    matrix: 'WAKE UP, NEO... THE MATRIX HAS YOU.',
+};
 
-hamburger.addEventListener('click', openMenu);
-mobileClose.addEventListener('click', closeMenu);
-mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
+if (terminalInput) {
+    terminalInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            const cmd = terminalInput.value.trim().toLowerCase();
+            terminalInput.value = '';
 
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeMenu();
-});
+            const inputLine = document.createElement('div');
+            inputLine.className = 'term-line';
+            inputLine.innerHTML = `<span class="term-prompt">adithya@cyber-node:~$</span> ${cmd}`;
+            terminalBody.appendChild(inputLine);
 
+            const responseLine = document.createElement('div');
+            responseLine.className = 'term-line';
 
-/* ══════════════════════════════════════════════
-   7. ACTIVE NAV LINK ON SCROLL
-══════════════════════════════════════════════ */
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-link[data-section]');
+            if (cmd === 'clear') {
+                terminalBody.innerHTML = '';
+                return;
+            } else if (cmd === 'exit') {
+                terminalModal.classList.remove('open');
+                return;
+            } else if (commands[cmd]) {
+                responseLine.textContent = commands[cmd];
+            } else if (cmd !== '') {
+                responseLine.textContent = `Command not recognized: '${cmd}'. Type 'help' for options.`;
+            }
 
-const sectionObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const id = entry.target.id;
-            navLinks.forEach(link => {
-                link.classList.toggle('active', link.dataset.section === id);
-            });
+            if (cmd !== '') terminalBody.appendChild(responseLine);
+            terminalBody.scrollTop = terminalBody.scrollHeight;
         }
     });
-}, { threshold: 0.35, rootMargin: '-80px 0px 0px 0px' });
-
-sections.forEach(s => sectionObserver.observe(s));
-
+}
 
 /* ══════════════════════════════════════════════
-   8. SMOOTH SCROLL
+   6. 3D TILT EFFECT ON CARDS
 ══════════════════════════════════════════════ */
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (href === '#') return;
-        const target = document.querySelector(href);
-        if (!target) return;
-        e.preventDefault();
-        const top = target.getBoundingClientRect().top + window.scrollY - 72;
-        window.scrollTo({ top, behavior: 'smooth' });
+document.querySelectorAll('.tilt-card').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+
+        const rotX = -((y - cy) / cy) * 10;
+        const rotY = ((x - cx) / cx) * 10;
+
+        card.style.transform = `perspective(1000px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.02, 1.02, 1.02)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
     });
 });
 
-
 /* ══════════════════════════════════════════════
-   9. SCROLL REVEAL ANIMATIONS
+   7. SKILL METERS & NUMERICAL COUNTERS
 ══════════════════════════════════════════════ */
-function initRevealObserver() {
-    // Add reveal classes dynamically
-    const revealTargets = [
-        { selector: '.section-header', cls: 'reveal' },
-        { selector: '.glass-card', cls: 'reveal' },
-        { selector: '.timeline-item', cls: 'reveal-left' },
-        { selector: '.about-visual-col', cls: 'reveal-right' },
-        { selector: '.hero-content', cls: 'reveal-left' },
-        { selector: '.hero-visual', cls: 'reveal-right' },
-    ];
-
-    revealTargets.forEach(({ selector, cls }) => {
-        document.querySelectorAll(selector).forEach((el, idx) => {
-            el.classList.add(cls);
-            el.style.transitionDelay = `${idx * 0.08}s`;
-        });
-    });
-
-    const revealObs = new IntersectionObserver((entries) => {
+function initMeterObserver() {
+    const fills = document.querySelectorAll('.meter-bar-fill');
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
+                const fill = entry.target;
+                fill.style.width = fill.dataset.fill;
+
+                const pctElem = fill.closest('.meter-item').querySelector('.meter-pct');
+                if (pctElem) {
+                    let val = 0;
+                    const target = parseInt(pctElem.dataset.value);
+                    const interval = setInterval(() => {
+                        val++;
+                        pctElem.textContent = `${val}%`;
+                        if (val >= target) clearInterval(interval);
+                    }, 15);
+                }
             }
         });
-    }, { threshold: 0.1, rootMargin: '-40px 0px 0px 0px' });
+    }, { threshold: 0.3 });
 
-    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => {
-        revealObs.observe(el);
-    });
+    fills.forEach(f => observer.observe(f));
 }
 
-
-/* ══════════════════════════════════════════════
-   10. PROFICIENCY BARS ANIMATION
-══════════════════════════════════════════════ */
-const profFills = document.querySelectorAll('.prof-fill');
-
-const barObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const fill = entry.target;
-            const width = fill.dataset.width;
-            fill.style.width = `${width}%`;
-            barObserver.unobserve(fill);
-        }
-    });
-}, { threshold: 0.5 });
-
-profFills.forEach(fill => barObserver.observe(fill));
-
-
-/* ══════════════════════════════════════════════
-   11. 3D TILT EFFECT ON CARDS
-══════════════════════════════════════════════ */
-function initTiltCards() {
-    document.querySelectorAll('.tilt-card').forEach(card => {
-        card.addEventListener('mousemove', (e) => {
-            const rect = card.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
-            const cx = rect.width / 2;
-            const cy = rect.height / 2;
-            const dx = (x - cx) / cx;
-            const dy = (y - cy) / cy;
-
-            const rotX = -dy * 10;
-            const rotY = dx * 10;
-
-            card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.03,1.03,1.03)`;
-
-            // Update shine position
-            const shine = card.querySelector('.project-shine');
-            if (shine) {
-                shine.style.setProperty('--mx', `${(x / rect.width) * 100}%`);
-                shine.style.setProperty('--my', `${(y / rect.height) * 100}%`);
-            }
-        });
-
-        card.addEventListener('mouseleave', () => {
-            card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale3d(1,1,1)';
-        });
-    });
-}
-
-initTiltCards();
-
-
-/* ══════════════════════════════════════════════
-   12. CONTACT FORM
-══════════════════════════════════════════════ */
-const contactForm = document.getElementById('contactForm');
-const submitBtn = document.getElementById('submit-btn');
-
-contactForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-    const name = document.getElementById('name').value.trim();
-    const email = document.getElementById('email').value.trim();
-    const subject = document.getElementById('subject').value.trim();
-    const message = document.getElementById('message').value.trim();
-
-    if (!name || !email || !subject || !message) return;
-
-    // Loading state
-    submitBtn.innerHTML = '<span>Sending...</span><i class="fas fa-circle-notch fa-spin"></i>';
-    submitBtn.disabled = true;
-
-    setTimeout(() => {
-        submitBtn.innerHTML = '<span>Message Sent!</span><i class="fas fa-check"></i>';
-        submitBtn.style.background = 'linear-gradient(135deg, #00ff88, #00d4ff)';
-        contactForm.reset();
-
-        setTimeout(() => {
-            submitBtn.innerHTML = '<span>Send Message</span><i class="fas fa-paper-plane"></i>';
-            submitBtn.style.background = '';
-            submitBtn.disabled = false;
-        }, 3000);
-    }, 1500);
-});
-
-
-/* ══════════════════════════════════════════════
-   13. TYPING CURSOR EFFECT (Hero Section)
-══════════════════════════════════════════════ */
-function initParticleCounter() {
-    // Add a subtle particle count to console for fun
-    console.log(
-        '%c👨‍💻 Adithya S Shetty Portfolio\n%c Built with Three.js + Vanilla JS\n%c github.com/shettyadi57',
-        'color: #00d4ff; font-size: 20px; font-weight: bold;',
-        'color: #a855f7; font-size: 14px;',
-        'color: #94a3b8; font-size: 12px;'
-    );
-}
-
-initParticleCounter();
-
-
-/* ══════════════════════════════════════════════
-   14. ORBIT ICON ANIMATION FIX
-══════════════════════════════════════════════ */
-function fixOrbitIcons() {
-    // Counter-rotate orbit icons so they stay upright
-    const orbits = document.querySelectorAll('.orbit');
-    const speeds = [12, 20]; // seconds
-    
-    orbits.forEach((orbit, oi) => {
-        const icons = orbit.querySelectorAll('.orbit-icon');
-        const speed = speeds[oi] || 15;
-        const dir = oi % 2 === 0 ? 1 : -1;
-
-        let angle = 0;
-        setInterval(() => {
-            angle += (360 / (speed * 60)) * dir;
-            icons.forEach((icon, ii) => {
-                const baseAngle = (360 / icons.length) * ii;
-                const r = oi === 0 ? 100 : 160;
-                const rad = ((baseAngle + angle) * Math.PI) / 180;
-                const x = Math.cos(rad) * r;
-                const y = Math.sin(rad) * r;
-                icon.style.transform = `translate(${x}px, ${y}px)`;
-                icon.style.position = 'absolute';
-                icon.style.top = '50%';
-                icon.style.left = '50%';
-                icon.style.marginTop = '-22px';
-                icon.style.marginLeft = '-22px';
-            });
-        }, 1000 / 60);
-    });
-}
-
-// Run orbit fix only on desktop
-if (window.innerWidth > 768) {
-    fixOrbitIcons();
-}
-
-
-/* ══════════════════════════════════════════════
-   15. HERO NUMBER COUNTER ANIMATION
-══════════════════════════════════════════════ */
-function animateCounters() {
-    const counters = document.querySelectorAll('.stat-num');
-    counters.forEach(counter => {
-        const target = parseFloat(counter.textContent.replace('+', ''));
-        const suffix = counter.textContent.includes('+') ? '+' : '';
-        const decimals = counter.textContent.includes('.') ? 2 : 0;
-        let current = 0;
-        const increment = target / 60;
+function initCounters() {
+    const stats = document.querySelectorAll('.stat-num');
+    stats.forEach(stat => {
+        const target = parseFloat(stat.dataset.target);
+        const decimals = parseInt(stat.dataset.decimals || 0);
+        let curr = 0;
+        const inc = target / 50;
 
         const step = () => {
-            current = Math.min(current + increment, target);
-            counter.textContent = current.toFixed(decimals) + suffix;
-            if (current < target) requestAnimationFrame(step);
+            curr += inc;
+            if (curr >= target) {
+                stat.textContent = target.toFixed(decimals);
+            } else {
+                stat.textContent = curr.toFixed(decimals);
+                requestAnimationFrame(step);
+            }
         };
         requestAnimationFrame(step);
     });
 }
 
-// Run once hero is visible
-const heroObserver = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) {
-        setTimeout(animateCounters, 1400); // after loader
-        heroObserver.disconnect();
-    }
-}, { threshold: 0.5 });
-
-const heroSection = document.getElementById('home');
-if (heroSection) heroObserver.observe(heroSection);
-
-
 /* ══════════════════════════════════════════════
-   16. ACTIVE NAV INDICATOR
+   8. MOBILE MENU & STICKY HEADER
 ══════════════════════════════════════════════ */
-// Ensure first link is active on load
-document.addEventListener('DOMContentLoaded', () => {
-    const firstLink = document.querySelector('.nav-link[data-section="home"]');
-    if (firstLink) firstLink.classList.add('active');
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobile-menu');
+const mobileClose = document.getElementById('mobile-close');
+const header = document.getElementById('header');
+
+if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => mobileMenu.classList.add('open'));
+}
+if (mobileClose && mobileMenu) {
+    mobileClose.addEventListener('click', () => mobileMenu.classList.remove('open'));
+}
+
+window.addEventListener('scroll', () => {
+    if (header) header.classList.toggle('scrolled', window.scrollY > 30);
 });
