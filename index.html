@@ -3,365 +3,629 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ADITHYA S SHETTY | Tech Student Portfolio</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-    <link rel="java script" href="script.js">
+    <title>Adithya S Shetty | CS Student & Developer</title>
+    <meta name="description" content="Portfolio of Adithya S Shetty — Computer Science student at Kuvempu University, Full-Stack Developer, Python enthusiast, and competitive coding champion.">
+    <meta name="keywords" content="Adithya S Shetty, portfolio, computer science, developer, python, flask, Kuvempu University">
+    <meta name="author" content="Adithya S Shetty">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="light-mode">
-    <!-- Your content -->
-</body>
-<<<<<<< HEAD
-=======
-       
->>>>>>> b89680792c2df9efd371d1a9898775ec323a4e6c
 <body>
-    
-    <!-- Header & Navigation -->
-    <header>
-    <div class="container">
-        <nav>
-            <div class="logo">ADITHYA S <span>SHETTY</span></div>
-            
-            <!-- Navigation Links -->
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#achievements">Achievements</a>
-                <a href="#projects">Projects</a>
-                <a href="#education">Education</a>
-                <a href="#contact">Contact</a>
+
+    <!-- 3D Canvas Background -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Loading Screen -->
+    <div id="loader">
+        <div class="loader-content">
+            <div class="loader-ring"></div>
+            <div class="loader-text">
+                <span class="loader-name">ASS</span>
+                <span class="loader-sub">Initializing...</span>
             </div>
-            
-            <!-- Theme Toggle -->
-            <div class="theme-toggle-container">
-                <button id="theme-toggle" class="theme-toggle-btn" aria-label="Toggle dark mode">
-                    <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
-                        <path d="M12 2V4M12 20V22M4 12H2M22 12H20M19.07 4.93L17.66 6.34M6.34 17.66L4.93 19.07M19.07 19.07L17.66 17.66M6.34 6.34L4.93 4.93" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
-                    <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+        </div>
+    </div>
+
+    <!-- Cursor -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <!-- Noise overlay -->
+    <div class="noise-overlay"></div>
+
+    <!-- ═══════════════ HEADER ═══════════════ -->
+    <header id="header">
+        <div class="nav-container">
+            <a href="#home" class="nav-logo">
+                <span class="logo-bracket">&lt;</span>
+                <span class="logo-name">Adithya</span>
+                <span class="logo-slash">/</span>
+                <span class="logo-bracket">&gt;</span>
+            </a>
+
+            <nav class="nav-links" id="nav-links">
+                <a href="#home" class="nav-link active" data-section="home">Home</a>
+                <a href="#about" class="nav-link" data-section="about">About</a>
+                <a href="#skills" class="nav-link" data-section="skills">Skills</a>
+                <a href="#projects" class="nav-link" data-section="projects">Projects</a>
+                <a href="#achievements" class="nav-link" data-section="achievements">Awards</a>
+                <a href="#education" class="nav-link" data-section="education">Education</a>
+                <a href="#contact" class="nav-link" data-section="contact">Contact</a>
+            </nav>
+
+            <div class="nav-actions">
+                <a href="#contact" class="nav-cta">Hire Me</a>
+                <button class="hamburger" id="hamburger" aria-label="Menu">
+                    <span></span><span></span><span></span>
                 </button>
             </div>
-            
-            <!-- Mobile Menu Button (SINGLE) -->
-            <div class="mobile-menu-btn">
-                <i class="fas fa-bars"></i>
-            </div>
-        </nav>
-    </div>
-</header>
+        </div>
+    </header>
 
-<!-- Mobile Menu Overlay -->
-<!-- Mobile Menu Overlay (Add this after your header closing tag) -->
-<div class="mobile-menu-overlay">
-    <div class="mobile-menu-header">
-        <div class="logo">Alex<span>Chen</span></div>
-        <div class="mobile-menu-close">
-            <i class="fas fa-times"></i>
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobile-menu">
+        <div class="mobile-menu-inner">
+            <button class="mobile-close" id="mobile-close"><i class="fas fa-times"></i></button>
+            <nav class="mobile-nav">
+                <a href="#home" class="mobile-link"><span class="link-num">01.</span>Home</a>
+                <a href="#about" class="mobile-link"><span class="link-num">02.</span>About</a>
+                <a href="#skills" class="mobile-link"><span class="link-num">03.</span>Skills</a>
+                <a href="#projects" class="mobile-link"><span class="link-num">04.</span>Projects</a>
+                <a href="#achievements" class="mobile-link"><span class="link-num">05.</span>Awards</a>
+                <a href="#education" class="mobile-link"><span class="link-num">06.</span>Education</a>
+                <a href="#contact" class="mobile-link"><span class="link-num">07.</span>Contact</a>
+            </nav>
         </div>
     </div>
-    <div class="mobile-menu-links">
-        <a href="#home"><i class="fas fa-home"></i> Home</a>
-        <a href="#about"><i class="fas fa-user"></i> About</a>
-        <a href="#achievements"><i class="fas fa-trophy"></i> Achievements</a>
-        <a href="#projects"><i class="fas fa-code"></i> Projects</a>
-        <a href="#education"><i class="fas fa-graduation-cap"></i> Education</a>
-        <a href="#contact"><i class="fas fa-envelope"></i> Contact</a>
-        <div class="mobile-theme-toggle">
-            <button id="mobile-theme-toggle" class="theme-toggle-btn mobile">
-                <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <circle cx="12" cy="12" r="5" stroke-width="2"/>
-                    <path d="M12 2V4M12 20V22M4 12H2M22 12H20M19.07 4.93L17.66 6.34M6.34 17.66L4.93 19.07M19.07 19.07L17.66 17.66M6.34 6.34L4.93 4.93" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-                <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                <span>Dark Mode</span>
-            </button>
-        </div>
-    </div>
-</div>
-    
 
-   
-
-
-    <!-- Hero Section -->
+    <!-- ═══════════════ HERO ═══════════════ -->
     <section id="home" class="hero">
-        <div class="container">
+        <div class="hero-bg-grid"></div>
+        <div class="hero-container">
             <div class="hero-content">
-                <h1>ADITHYA S SHETTY</h1>
-                <h2>Computer Science Student & Full-Stack Developer</h2>
-                <p>I'm a passionate tech student specializing in Python. Currently pursuing my Bachelor's in Computer Science at Kuvempu University with a focus on building innovative solutions to real-world problems.</p>
-                <div>
-                    <a href="#projects" class="btn">View My Work</a>
-                    <a href="#contact" class="btn btn-outline">Get In Touch</a>
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    <span>Available for opportunities</span>
                 </div>
-            </div>
-            <div class="hero-image">
-    <div style="width: 350px; height: 350px; background: linear-gradient(135deg, var(--primary), var(--accent)); border-radius: 50%; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-        
-        <img src="portfolio.jpeg" alt="Profile Image" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-    
-    </div>
-</div>
 
-            </div>
-        </div>
-    </section>
-    <!-- Option 1: Toggle Switch -->
-<!-- Option 2: Button (Choose one) -->
+                <h1 class="hero-title">
+                    <span class="title-line">Hi, I'm</span>
+                    <span class="title-name glitch" data-text="Adithya S Shetty">Adithya S Shetty</span>
+                </h1>
 
-    <!-- About Section -->
-    <section id="about" style="background-color: #f1f5f9;">
-        <div class="container">
-            <div class="section-title">
-                <h2>About Me</h2>
-                <p>Learn more about my skills, experience, and what drives me in the world of technology</p>
-            </div>
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>Driven by Innovation & Problem Solving</h3>
-                    <p>I'm Second-year Computer Science student with a passion for creating impactful technology solutions.</p>
-                </div>
-               
-                   
-        </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects">
-        <div class="container">
-            <div class="section-title">
-                <h2>My Projects</h2>
-                <p>A showcase of my recent work and technical projects</p>
-            </div>
-           <div class="project-card">
-    <div class="project-img" style="background: linear-gradient(135deg, var(--primary), var(--accent)); display: flex; align-items: center; justify-content: center; gap: 20px;">
-        <i class="fas fa-microchip" style="color: white; font-size: 2.5rem;"></i>
-        <i class="fas fa-memory" style="color: white; font-size: 2.5rem;"></i>
-        <i class="fas fa-hdd" style="color: white; font-size: 2.5rem;"></i>
-        <i class="fas fa-battery-three-quarters" style="color: white; font-size: 2.5rem;"></i>
-    </div>
-    <div class="project-info">
-        <h3>Device Health Monitoring System</h3>
-        <p><strong>Real-time System Performance Dashboard</strong></p>
-        <p>Developed a real-time Device Health Monitoring System that tracks system performance metrics such as CPU usage, RAM utilization, disk usage, and battery status through a web-based dashboard. The application collects system data using Python and displays it dynamically using a Flask backend and interactive frontend interface.</p>
-        <div class="project-tech">
-            <span class="tech-tag">Python</span>
-            <span class="tech-tag">Flask</span>
-            <span class="tech-tag">JavaScript</span>
-            <span class="tech-tag">psutil</span>
-            <span class="tech-tag">Chart.js</span>
-            <span class="tech-tag">WebSockets</span>
-        </div>
-        <a href="https://github.com/shettyadi57/Device-Health-monitor-tool" class="btn">View Project</a>
-    </div>
-</div>
-
-    </section>
-
-    <!-- Education Section -->
-    <section id="education" style="background-color: #f1f5f9;">
-        <div class="container">
-            <div class="section-title">
-                <h2>Education </h2>
-                <p>My academic journey </p>
-            </div>
-            <div class="timeline">
-                <!-- Timeline Item 1 -->
-                <div class="timeline-item">
-                    <div class="timeline-date">2024 - Present</div>
-                    <div class="timeline-content">
-                        <h3>Bachelor Computer Application</h3>
-                        <h4>Kuvempu University</h4>
-                        <p>CPA: 7.67 </p>
-                        <p></p>
+                <div class="hero-roles">
+                    <span class="role-prefix">I build&nbsp;</span>
+                    <div class="roles-slider">
+                        <span class="role-item">Full-Stack Apps</span>
+                        <span class="role-item">Python Solutions</span>
+                        <span class="role-item">Web Dashboards</span>
+                        <span class="role-item">Innovative Products</span>
                     </div>
                 </div>
-            
-    </section>
-    <!-- Achievements Section -->
-<section id="achievements" style="background-color: #f8fafc;">
-    <div class="container">
-        <div class="section-title">
-            <h2>Achievements </h2>
-            <p>My recognitions, awards.</p>
+
+                <p class="hero-desc">
+                    2nd year <span class="highlight">BCA student</span> at Kuvempu University. 
+                    District-level <span class="highlight">coding champion</span>, national hackathon runner-up, 
+                    and passionate builder of real-world tech solutions.
+                </p>
+
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <span class="stat-num">2+</span>
+                        <span class="stat-label">Years Coding</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-num">4+</span>
+                        <span class="stat-label">Awards Won</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-item">
+                        <span class="stat-num">7.67</span>
+                        <span class="stat-label">CGPA</span>
+                    </div>
+                </div>
+
+                <div class="hero-actions">
+                    <a href="#projects" class="btn-primary">
+                        <span>View Projects</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    <a href="#contact" class="btn-ghost">
+                        <span>Let's Talk</span>
+                    </a>
+                </div>
+
+                <div class="hero-social">
+                    <a href="https://github.com/shettyadi57" target="_blank" class="social-pill">
+                        <i class="fab fa-github"></i> GitHub
+                    </a>
+                    <a href="https://www.linkedin.com/in/adithya-s-shetty-99b810331/" target="_blank" class="social-pill">
+                        <i class="fab fa-linkedin-in"></i> LinkedIn
+                    </a>
+                    <a href="mailto:shettyadithyas57@gmail.com" class="social-pill">
+                        <i class="fas fa-envelope"></i> Email
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-visual">
+                <div class="visual-ring ring-1"></div>
+                <div class="visual-ring ring-2"></div>
+                <div class="visual-ring ring-3"></div>
+                <div class="profile-frame">
+                    <div class="profile-glow"></div>
+                    <img src="portfolio.jpeg" alt="Adithya S Shetty" class="profile-img">
+                    <div class="profile-badge-fl">
+                        <i class="fas fa-trophy"></i>
+                        <span>District Champ</span>
+                    </div>
+                </div>
+                <div class="floating-card card-1">
+                    <i class="fab fa-python"></i>
+                    <span>Python</span>
+                </div>
+                <div class="floating-card card-2">
+                    <i class="fas fa-flask"></i>
+                    <span>Flask</span>
+                </div>
+                <div class="floating-card card-3">
+                    <i class="fas fa-code"></i>
+                    <span>Full Stack</span>
+                </div>
+            </div>
         </div>
-        
-        <div class="achievements-container">
-            <!-- Achievement Grid -->
+
+        <div class="hero-scroll-indicator">
+            <div class="scroll-line"></div>
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <!-- ═══════════════ ABOUT ═══════════════ -->
+    <section id="about" class="about">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">01. About</span>
+                <h2 class="section-title">Driven by Innovation</h2>
+                <p class="section-sub">Turning complex problems into elegant solutions</p>
+            </div>
+
+            <div class="about-grid">
+                <div class="about-text-col">
+                    <div class="about-card glass-card">
+                        <p>I'm a <strong>second-year BCA student</strong> at Kuvempu University with a deep passion for building technology that solves real-world problems. My journey started with Python and has evolved into full-stack development.</p>
+                        <p>Beyond academics, I compete in coding contests, winning at district and national levels. I believe in learning by doing — every project I build teaches me something new.</p>
+                        <div class="about-highlights">
+                            <div class="highlight-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>Shimoga, Karnataka</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>Kuvempu University</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>shettyadithyas57@gmail.com</span>
+                            </div>
+                            <div class="highlight-item">
+                                <i class="fas fa-phone"></i>
+                                <span>+91 8088716254</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-visual-col">
+                    <div class="tech-orbit">
+                        <div class="orbit-center">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="orbit orbit-1">
+                            <div class="orbit-icon" style="--angle: 0deg"><i class="fab fa-python"></i></div>
+                            <div class="orbit-icon" style="--angle: 120deg"><i class="fab fa-js"></i></div>
+                            <div class="orbit-icon" style="--angle: 240deg"><i class="fab fa-html5"></i></div>
+                        </div>
+                        <div class="orbit orbit-2">
+                            <div class="orbit-icon" style="--angle: 60deg"><i class="fab fa-css3-alt"></i></div>
+                            <div class="orbit-icon" style="--angle: 180deg"><i class="fas fa-database"></i></div>
+                            <div class="orbit-icon" style="--angle: 300deg"><i class="fab fa-github"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ SKILLS ═══════════════ -->
+    <section id="skills" class="skills">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">02. Skills</span>
+                <h2 class="section-title">Tech Arsenal</h2>
+                <p class="section-sub">Technologies I work with every day</p>
+            </div>
+
+            <div class="skills-grid">
+                <div class="skill-category glass-card">
+                    <div class="category-header">
+                        <div class="category-icon"><i class="fas fa-code"></i></div>
+                        <h3>Languages</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">HTML5</span>
+                        <span class="skill-tag">CSS3</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">C</span>
+                    </div>
+                </div>
+
+                <div class="skill-category glass-card">
+                    <div class="category-header">
+                        <div class="category-icon"><i class="fas fa-server"></i></div>
+                        <h3>Frameworks</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Flask</span>
+                        <span class="skill-tag">Chart.js</span>
+                        <span class="skill-tag">WebSockets</span>
+                        <span class="skill-tag">REST APIs</span>
+                        <span class="skill-tag">psutil</span>
+                    </div>
+                </div>
+
+                <div class="skill-category glass-card">
+                    <div class="category-header">
+                        <div class="category-icon"><i class="fas fa-tools"></i></div>
+                        <h3>Tools & Platforms</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Git & GitHub</span>
+                        <span class="skill-tag">VS Code</span>
+                        <span class="skill-tag">Linux</span>
+                        <span class="skill-tag">MySQL</span>
+                        <span class="skill-tag">Postman</span>
+                    </div>
+                </div>
+
+                <div class="skill-category glass-card">
+                    <div class="category-header">
+                        <div class="category-icon"><i class="fas fa-brain"></i></div>
+                        <h3>Concepts</h3>
+                    </div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">DSA</span>
+                        <span class="skill-tag">OOP</span>
+                        <span class="skill-tag">System Design</span>
+                        <span class="skill-tag">Real-time Systems</span>
+                        <span class="skill-tag">Web Dev</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Proficiency Bars -->
+            <div class="proficiency-section">
+                <h3 class="prof-title">Core Proficiency</h3>
+                <div class="prof-bars">
+                    <div class="prof-item">
+                        <div class="prof-meta">
+                            <span>Python</span>
+                            <span>85%</span>
+                        </div>
+                        <div class="prof-bar">
+                            <div class="prof-fill" data-width="85"></div>
+                        </div>
+                    </div>
+                    <div class="prof-item">
+                        <div class="prof-meta">
+                            <span>HTML / CSS</span>
+                            <span>80%</span>
+                        </div>
+                        <div class="prof-bar">
+                            <div class="prof-fill" data-width="80"></div>
+                        </div>
+                    </div>
+                    <div class="prof-item">
+                        <div class="prof-meta">
+                            <span>JavaScript</span>
+                            <span>70%</span>
+                        </div>
+                        <div class="prof-bar">
+                            <div class="prof-fill" data-width="70"></div>
+                        </div>
+                    </div>
+                    <div class="prof-item">
+                        <div class="prof-meta">
+                            <span>Flask / Backend</span>
+                            <span>75%</span>
+                        </div>
+                        <div class="prof-bar">
+                            <div class="prof-fill" data-width="75"></div>
+                        </div>
+                    </div>
+                    <div class="prof-item">
+                        <div class="prof-meta">
+                            <span>SQL / Databases</span>
+                            <span>65%</span>
+                        </div>
+                        <div class="prof-bar">
+                            <div class="prof-fill" data-width="65"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ PROJECTS ═══════════════ -->
+    <section id="projects" class="projects">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">03. Projects</span>
+                <h2 class="section-title">Featured Work</h2>
+                <p class="section-sub">Things I've built that I'm proud of</p>
+            </div>
+
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card glass-card tilt-card" id="proj-1">
+                    <div class="project-number">01</div>
+                    <div class="project-top">
+                        <div class="project-icon-wrap">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/shettyadi57/Device-Health-monitor-tool" target="_blank" class="proj-link" aria-label="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <h3 class="project-title">Device Health Monitor</h3>
+                    <p class="project-desc">Real-time system performance dashboard tracking CPU usage, RAM utilization, disk usage, and battery status via a Flask backend with WebSocket-powered live updates.</p>
+                    <div class="project-tags">
+                        <span>Python</span><span>Flask</span><span>JavaScript</span>
+                        <span>WebSockets</span><span>Chart.js</span><span>psutil</span>
+                    </div>
+                    <div class="project-shine"></div>
+                </div>
+
+                <!-- Project 2 (placeholder for more) -->
+                <div class="project-card glass-card tilt-card" id="proj-2">
+                    <div class="project-number">02</div>
+                    <div class="project-top">
+                        <div class="project-icon-wrap">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/shettyadi57" target="_blank" class="proj-link" aria-label="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <h3 class="project-title">More Coming Soon</h3>
+                    <p class="project-desc">Currently working on exciting new projects. Check back soon or visit my GitHub profile to see my latest contributions and experiments.</p>
+                    <div class="project-tags">
+                        <span>Python</span><span>Flask</span><span>Web Dev</span>
+                    </div>
+                    <div class="project-shine"></div>
+                </div>
+            </div>
+
+            <div class="projects-cta">
+                <a href="https://github.com/shettyadi57" target="_blank" class="btn-outline-neon">
+                    <i class="fab fa-github"></i>
+                    <span>View All on GitHub</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ ACHIEVEMENTS ═══════════════ -->
+    <section id="achievements" class="achievements">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">04. Awards</span>
+                <h2 class="section-title">Achievements</h2>
+                <p class="section-sub">Recognition & competition wins</p>
+            </div>
+
             <div class="achievements-grid">
-                <!-- Achievement 1 -->
-                <div class="achievement-card">
-                    <div class="achievement-icon">
-                        <i class="fas fa-trophy" style="color: #f59e0b;"></i>
+                <div class="achievement-card glass-card tilt-card">
+                    <div class="ach-rank gold">🥇</div>
+                    <div class="ach-content">
+                        <h3>1st Place — Code Neura 2025</h3>
+                        <p>Won first place in the district-level coding competition showcasing problem-solving and algorithmic thinking.</p>
+                        <span class="ach-date">October 2025</span>
                     </div>
-                    <h3>1st Place - Code Neura 2025</h3>
-                    <p>Won first place in the district level coding competition .</p>
-                    <span class="achievement-date">oct 2025</span>
+                    <div class="ach-glow gold-glow"></div>
+                    <div class="project-shine"></div>
                 </div>
-                
-                <!-- Achievement 2 -->
-                 <!-- Achievement 1 -->
-                <div class="achievement-card">
-                    <div class="achievement-icon">
-                        <i class="fas fa-trophy" style="color: #f59e0b;"></i>
-                    </div>
-                    <h3>1st Place - Green IT Competition  2025</h3>
-                    <p>Won first place in the Intra  college  competition .</p>
-                    <span class="achievement-date"> Feb-2026</span>
-                </div>
-                
-                <!-- Achievement 3 -->
-                <div class="achievement-card">
-                    <div class="achievement-icon">
-                        <i class="fas fa-medal" style="color: #10b981;"></i>
-                    </div>
-                    <h3>2nd Place - Tech Carnival 2K26 </h3>
-                    <p>National level Hackathon Runner Up.</p>
-                    <span class="achievement-date">2026</span>
-                </div>
-          
-                <!-- Achievement 3 -->
-                <div class="achievement-card">
-                    <div class="achievement-icon">
-                        <i class="fas fa-medal" style="color: #10b981;"></i>
-                    </div>
-                    <h3>Code Nebula</h3>
-                    <p>College level Coding competition Runner Up.</p>
-                    <span class="achievement-date">2025</span>
-                </div>
-               
-                
-                
-               
-                
-    
-</section>
 
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <div class="section-title">
-                <h2>Get In Touch</h2>
-                <p>Feel free to reach out for collaborations or just to say hello</p>
+                <div class="achievement-card glass-card tilt-card">
+                    <div class="ach-rank gold">🥇</div>
+                    <div class="ach-content">
+                        <h3>1st Place — Green IT 2025</h3>
+                        <p>Won first place in the intra-college Green IT competition for sustainable technology innovation.</p>
+                        <span class="ach-date">February 2026</span>
+                    </div>
+                    <div class="ach-glow gold-glow"></div>
+                    <div class="project-shine"></div>
+                </div>
+
+                <div class="achievement-card glass-card tilt-card">
+                    <div class="ach-rank silver">🥈</div>
+                    <div class="ach-content">
+                        <h3>Runner-Up — Tech Carnival 2K26</h3>
+                        <p>National-level Hackathon Runner-Up, competing against teams from top colleges across India.</p>
+                        <span class="ach-date">2026</span>
+                    </div>
+                    <div class="ach-glow silver-glow"></div>
+                    <div class="project-shine"></div>
+                </div>
+
+                <div class="achievement-card glass-card tilt-card">
+                    <div class="ach-rank silver">🥈</div>
+                    <div class="ach-content">
+                        <h3>Runner-Up — Code Nebula 2025</h3>
+                        <p>College-level coding competition runner-up, demonstrating strong DSA and problem-solving skills.</p>
+                        <span class="ach-date">2025</span>
+                    </div>
+                    <div class="ach-glow silver-glow"></div>
+                    <div class="project-shine"></div>
+                </div>
             </div>
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>Let's Connect</h3>
-                    <p>I'm always open to discussing new opportunities, interesting projects, or potential collaborations.</p>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div>
-                            <h4>Email</h4>
-                            <p>shettyadithyas57@gmail.com</p>
-                        </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ EDUCATION ═══════════════ -->
+    <section id="education" class="education">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">05. Education</span>
+                <h2 class="section-title">Academic Journey</h2>
+                <p class="section-sub">My educational background and qualifications</p>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-line"></div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot">
+                        <i class="fas fa-graduation-cap"></i>
                     </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
+                    <div class="timeline-card glass-card">
+                        <div class="tc-header">
+                            <span class="tc-year">2024 — Present</span>
+                            <span class="tc-badge active">Current</span>
                         </div>
-                        <div>
-                            <h4>Phone</h4>
-                            <p>8088716254</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div>
-                            <h4>Location</h4>
-                            <p>Shimoga,Karnataka</p>
+                        <h3>Bachelor of Computer Applications (BCA)</h3>
+                        <h4>Kuvempu University</h4>
+                        <p>Focusing on computer science fundamentals, programming, and full-stack development. Actively participating in competitions and hackathons.</p>
+                        <div class="tc-meta">
+                            <span><i class="fas fa-star"></i> CGPA: 7.67</span>
+                            <span><i class="fas fa-map-marker-alt"></i> Shimoga, Karnataka</span>
                         </div>
                     </div>
                 </div>
-                <div class="contact-form">
-                    <h3>Send Me a Message</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ CONTACT ═══════════════ -->
+    <section id="contact" class="contact">
+        <div class="section-container">
+            <div class="section-header">
+                <span class="section-tag">06. Contact</span>
+                <h2 class="section-title">Let's Connect</h2>
+                <p class="section-sub">Have an opportunity or just want to say hi?</p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-info glass-card">
+                    <h3>Open to Opportunities</h3>
+                    <p>I'm currently looking for internships, collaborations, and freelance projects. My inbox is always open!</p>
+
+                    <div class="contact-methods">
+                        <a href="mailto:shettyadithyas57@gmail.com" class="contact-method">
+                            <div class="cm-icon"><i class="fas fa-envelope"></i></div>
+                            <div class="cm-text">
+                                <span class="cm-label">Email</span>
+                                <span class="cm-value">shettyadithyas57@gmail.com</span>
+                            </div>
+                            <i class="fas fa-arrow-right cm-arrow"></i>
+                        </a>
+                        <a href="tel:+918088716254" class="contact-method">
+                            <div class="cm-icon"><i class="fas fa-phone"></i></div>
+                            <div class="cm-text">
+                                <span class="cm-label">Phone</span>
+                                <span class="cm-value">+91 8088716254</span>
+                            </div>
+                            <i class="fas fa-arrow-right cm-arrow"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/adithya-s-shetty-99b810331/" target="_blank" class="contact-method">
+                            <div class="cm-icon"><i class="fab fa-linkedin-in"></i></div>
+                            <div class="cm-text">
+                                <span class="cm-label">LinkedIn</span>
+                                <span class="cm-value">Adithya S Shetty</span>
+                            </div>
+                            <i class="fas fa-arrow-right cm-arrow"></i>
+                        </a>
+                        <a href="https://github.com/shettyadi57" target="_blank" class="contact-method">
+                            <div class="cm-icon"><i class="fab fa-github"></i></div>
+                            <div class="cm-text">
+                                <span class="cm-label">GitHub</span>
+                                <span class="cm-value">@shettyadi57</span>
+                            </div>
+                            <i class="fas fa-arrow-right cm-arrow"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="contact-form-wrap glass-card">
+                    <h3>Send a Message</h3>
                     <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name">Full Name</label>
-                            <input type="text" id="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" required>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Full Name</label>
+                                <input type="text" id="name" placeholder="John Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" placeholder="john@example.com" required>
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="subject">Subject</label>
-                            <input type="text" id="subject" required>
+                            <input type="text" id="subject" placeholder="Internship Opportunity" required>
                         </div>
                         <div class="form-group">
                             <label for="message">Message</label>
-                            <textarea id="message" rows="5" required></textarea>
+                            <textarea id="message" rows="5" placeholder="Hi Adithya, I'd love to..." required></textarea>
                         </div>
-                        <button type="submit" class="btn">Send Message</button>
+                        <button type="submit" class="btn-primary full-width" id="submit-btn">
+                            <span>Send Message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="logo">Adithya S<span> Shetty</span></div>
-                <div class="social-links">
-                    <a href="https://github.com/shettyadi57"><i class="fab fa-github"></i></a>
-                    <a href="https://www.linkedin.com/in/adithya-s-shetty-99b810331/"><i class="fab fa-linkedin"></i></a>
-                  
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <span class="logo-bracket">&lt;</span>
+                    <span class="logo-name">Adithya</span>
+                    <span class="logo-slash">/</span>
+                    <span class="logo-bracket">&gt;</span>
                 </div>
+                <p class="footer-tagline">Building the future, one line at a time.</p>
             </div>
-            <div class="copyright">
-                <p>&copy; 2026  All rights reserved.</p>
+            <div class="footer-social">
+                <a href="https://github.com/shettyadi57" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/adithya-s-shetty-99b810331/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="mailto:shettyadithyas57@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Adithya S Shetty. Crafted with <span class="heart">♥</span> and lots of coffee.</p>
             </div>
         </div>
     </footer>
-<script>
-    // IMMEDIATE DARK MODE EXECUTION
-    (function() {
-        // Check for saved theme
-        const savedTheme = localStorage.getItem('theme');
-        
-        // Apply dark mode immediately if saved
-        if (savedTheme === 'dark') {
-            document.body.classList.add('dark-mode');
-        }
-        
-        // Set up toggle when page loads
-        window.addEventListener('load', function() {
-            const toggleBtn = document.getElementById('theme-toggle');
-            
-            if (toggleBtn) {
-                toggleBtn.addEventListener('click', function() {
-                    if (document.body.classList.contains('dark-mode')) {
-                        document.body.classList.remove('dark-mode');
-                        localStorage.setItem('theme', 'light');
-                    } else {
-                        document.body.classList.add('dark-mode');
-                        localStorage.setItem('theme', 'dark');
-                    }
-                });
-            }
-        });
-    })();
-</script>
-   
+
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
 </body>
-
 </html>
-
-
-
-
-
-
-
