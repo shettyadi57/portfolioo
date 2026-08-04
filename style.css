@@ -1853,6 +1853,346 @@ section {
     transform: translateX(0);
 }
 
+/* ═══════════════ FEATURED PROJECT ═══════════════ */
+.featured-project {
+    padding: 0;
+    margin-bottom: 28px;
+    overflow: hidden;
+}
+
+.fp-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    background: linear-gradient(90deg, rgba(0,212,255,0.15), rgba(168,85,247,0.15));
+    border-bottom: 1px solid var(--border);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    width: 100%;
+}
+
+.fp-badge i { font-size: 0.7rem; }
+
+.fp-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+}
+
+.fp-left {
+    padding: 40px 44px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    border-right: 1px solid var(--border);
+}
+
+.fp-right {
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: radial-gradient(ellipse at 50% 50%, rgba(0,212,255,0.03) 0%, transparent 70%);
+}
+
+.fp-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--primary);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    opacity: 0.5;
+}
+
+.fp-icon {
+    width: 64px !important;
+    height: 64px !important;
+    font-size: 1.8rem !important;
+    background: linear-gradient(135deg, #ff2d78, #ff8c00) !important;
+    box-shadow: 0 0 30px rgba(255, 45, 120, 0.3) !important;
+}
+
+.fp-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--text-1);
+    line-height: 1.2;
+}
+
+.fp-subtitle {
+    font-size: 0.9rem;
+    color: var(--primary);
+    font-weight: 600;
+    margin-top: -10px;
+}
+
+.fp-desc {
+    font-size: 0.9rem;
+    color: var(--text-2);
+    line-height: 1.8;
+}
+
+.fp-desc strong {
+    color: var(--text-1);
+}
+
+.fp-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.fp-features span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: var(--text-2);
+    font-weight: 500;
+}
+
+.fp-features i {
+    color: var(--neon-green);
+    font-size: 0.7rem;
+}
+
+.fp-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.fp-tags span {
+    padding: 4px 10px;
+    background: rgba(255, 45, 120, 0.08);
+    border: 1px solid rgba(255, 45, 120, 0.2);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #ff6b9d;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.fp-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+/* ─── Browser Mockup ─── */
+.fp-mockup {
+    width: 100%;
+    max-width: 420px;
+}
+
+.mockup-screen {
+    background: #0a0f1a;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+}
+
+.mockup-bar {
+    background: #111827;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+
+.mockup-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.mockup-dot.red    { background: #ff5f57; }
+.mockup-dot.yellow { background: #ffbd2e; }
+.mockup-dot.green  { background: #28c840; }
+
+.mockup-url {
+    margin-left: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    color: #4b5563;
+    background: rgba(255,255,255,0.04);
+    padding: 3px 12px;
+    border-radius: 100px;
+    flex: 1;
+    text-align: center;
+}
+
+.mockup-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.mock-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mock-logo {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #f0f6ff;
+}
+
+.mock-badge-mode {
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    background: rgba(255, 45, 120, 0.15);
+    border: 1px solid rgba(255, 45, 120, 0.25);
+    border-radius: 100px;
+    color: #ff6b9d;
+}
+
+.mock-week-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.mock-week-label {
+    font-size: 0.72rem;
+    color: #6b7280;
+    white-space: nowrap;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.mock-progress-outer {
+    flex: 1;
+    height: 5px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 100px;
+    overflow: hidden;
+}
+
+.mock-progress-inner {
+    height: 100%;
+    background: linear-gradient(90deg, #ff2d78, #ff8c00);
+    border-radius: 100px;
+    animation: shimmer 2.5s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.mock-week-pct {
+    font-size: 0.7rem;
+    font-family: 'JetBrains Mono', monospace;
+    color: #ff6b9d;
+    font-weight: 700;
+}
+
+.mock-cards-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.mock-card {
+    border-radius: 10px;
+    padding: 12px 8px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.mock-card.pink   { background: rgba(255, 45, 120, 0.1); border: 1px solid rgba(255,45,120,0.15); }
+.mock-card.purple { background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168,85,247,0.15); }
+.mock-card.teal   { background: rgba(0, 212, 255, 0.08); border: 1px solid rgba(0,212,255,0.15); }
+
+.mc-icon { font-size: 1.2rem; }
+
+.mc-val {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #f0f6ff;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.mc-lbl {
+    font-size: 0.65rem;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.mock-ai-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: rgba(0,212,255,0.06);
+    border: 1px solid rgba(0,212,255,0.12);
+    border-radius: 8px;
+    font-size: 0.73rem;
+    color: var(--text-2);
+    line-height: 1.4;
+}
+
+.mock-ai-bar i {
+    color: var(--primary);
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+/* ─── Project Type Badge ─── */
+.proj-type-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-3);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+    margin-top: -10px;
+}
+
+.proj-type-badge i { font-size: 0.7rem; color: var(--primary); }
+
+/* ─── Project Highlights ─── */
+.proj-highlights {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 16px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.proj-hl {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.78rem;
+    color: var(--text-2);
+    font-weight: 500;
+}
+
+.proj-hl i {
+    color: var(--primary);
+    font-size: 0.7rem;
+    width: 12px;
+}
+
 /* ─── Responsive ─── */
 @media (max-width: 1100px) {
     .skills-grid { grid-template-columns: repeat(2, 1fr); }
@@ -1887,6 +2227,21 @@ section {
     .projects-grid {
         grid-template-columns: 1fr;
     }
+
+    /* Featured project responsive */
+    .fp-body {
+        grid-template-columns: 1fr;
+    }
+    .fp-left {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 32px 28px;
+    }
+    .fp-right {
+        padding: 32px 28px;
+    }
+    .fp-title { font-size: 1.4rem; }
+    .fp-mockup { max-width: 100%; }
 
     .nav-links { display: none; }
     .hamburger { display: flex; }

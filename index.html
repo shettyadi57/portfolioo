@@ -371,38 +371,105 @@
             <div class="section-header">
                 <span class="section-tag">03. Projects</span>
                 <h2 class="section-title">Featured Work</h2>
-                <p class="section-sub">Things I've built that I'm proud of</p>
+                <p class="section-sub">Real-world products I've built from scratch</p>
             </div>
 
-            <div class="projects-grid">
-                <!-- Project 1 -->
-                <div class="project-card glass-card tilt-card" id="proj-1">
-                    <div class="project-number">01</div>
-                    <div class="project-top">
-                        <div class="project-icon-wrap">
-                            <i class="fas fa-heartbeat"></i>
+            <!-- ── Featured Project: Little Heart Beat ── -->
+            <div class="featured-project glass-card tilt-card" id="proj-featured">
+                <div class="fp-badge"><i class="fas fa-star"></i> Featured Project</div>
+                <div class="fp-body">
+                    <div class="fp-left">
+                        <div class="fp-number">01</div>
+                        <div class="project-icon-wrap fp-icon">
+                            <i class="fas fa-baby"></i>
                         </div>
-                        <div class="project-links">
-                            <a href="https://github.com/shettyadi57/Device-Health-monitor-tool" target="_blank" class="proj-link" aria-label="GitHub">
+                        <h3 class="fp-title">Little Heart Beat 👶</h3>
+                        <p class="fp-subtitle">AI-Powered Pregnancy & Motherhood Companion</p>
+                        <p class="fp-desc">
+                            An all-in-one platform for expecting mothers and their partners — featuring a <strong>Dual-Interface System</strong> (Mother Mode 🤱 vs. Partner Mode 👨‍👩‍👧), real-time health & vitals tracking, 3D hydration visualizer, AI consultation via Groq Llama 3 70B + Gemini, prenatal yoga hub, emergency SOS shake-to-trigger, digital time capsule, and native Android APK via Capacitor.
+                        </p>
+                        <div class="fp-features">
+                            <span><i class="fas fa-check-circle"></i> Code-based partner pairing</span>
+                            <span><i class="fas fa-check-circle"></i> 3D Water Bottle widget</span>
+                            <span><i class="fas fa-check-circle"></i> Week 1→40 baby tracker</span>
+                            <span><i class="fas fa-check-circle"></i> Shake-to-SOS emergency</span>
+                            <span><i class="fas fa-check-circle"></i> AI multi-model chat</span>
+                            <span><i class="fas fa-check-circle"></i> Memory time capsule</span>
+                        </div>
+                        <div class="fp-tags">
+                            <span>React 18</span><span>TypeScript</span><span>Vite</span>
+                            <span>Supabase</span><span>Groq AI</span><span>Gemini API</span>
+                            <span>Capacitor</span><span>Tailwind CSS</span><span>IndexedDB</span>
+                        </div>
+                        <div class="fp-actions">
+                            <a href="https://personal-portfolio-gamma-gold-55.vercel.app/" target="_blank" class="btn-primary">
+                                <i class="fas fa-external-link-alt"></i>
+                                <span>Live Demo</span>
+                            </a>
+                            <a href="https://github.com/shettyadi57/Little-Heart-Beat--" target="_blank" class="btn-ghost">
                                 <i class="fab fa-github"></i>
+                                <span>Source Code</span>
                             </a>
                         </div>
                     </div>
-                    <h3 class="project-title">Device Health Monitor</h3>
-                    <p class="project-desc">Real-time system performance dashboard tracking CPU usage, RAM utilization, disk usage, and battery status via a Flask backend with WebSocket-powered live updates.</p>
-                    <div class="project-tags">
-                        <span>Python</span><span>Flask</span><span>JavaScript</span>
-                        <span>WebSockets</span><span>Chart.js</span><span>psutil</span>
+                    <div class="fp-right">
+                        <div class="fp-mockup">
+                            <div class="mockup-screen">
+                                <div class="mockup-bar">
+                                    <span class="mockup-dot red"></span>
+                                    <span class="mockup-dot yellow"></span>
+                                    <span class="mockup-dot green"></span>
+                                    <span class="mockup-url">little-heartbeat.vercel.app</span>
+                                </div>
+                                <div class="mockup-content">
+                                    <div class="mock-header">
+                                        <div class="mock-logo">💗 Little Heart Beat</div>
+                                        <div class="mock-badge-mode">🤱 Mother Mode</div>
+                                    </div>
+                                    <div class="mock-week-bar">
+                                        <span class="mock-week-label">Week 24 of 40</span>
+                                        <div class="mock-progress-outer">
+                                            <div class="mock-progress-inner" style="width:60%"></div>
+                                        </div>
+                                        <span class="mock-week-pct">60%</span>
+                                    </div>
+                                    <div class="mock-cards-row">
+                                        <div class="mock-card pink">
+                                            <div class="mc-icon">💧</div>
+                                            <div class="mc-val">1.8L</div>
+                                            <div class="mc-lbl">Hydration</div>
+                                        </div>
+                                        <div class="mock-card purple">
+                                            <div class="mc-icon">👣</div>
+                                            <div class="mc-val">4,210</div>
+                                            <div class="mc-lbl">Steps</div>
+                                        </div>
+                                        <div class="mock-card teal">
+                                            <div class="mc-icon">❤️</div>
+                                            <div class="mc-val">142 BPM</div>
+                                            <div class="mc-lbl">Baby HR</div>
+                                        </div>
+                                    </div>
+                                    <div class="mock-ai-bar">
+                                        <i class="fas fa-robot"></i>
+                                        <span>AI: "Stay hydrated! You're at 64% of your daily goal..."</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="project-shine"></div>
                 </div>
+                <div class="project-shine"></div>
+            </div>
 
-                <!-- Project 2 (placeholder for more) -->
+            <!-- ── 2-Column Grid: ChronosAI + Smart Seva ── -->
+            <div class="projects-grid">
+                <!-- Project 2: ChronosAI -->
                 <div class="project-card glass-card tilt-card" id="proj-2">
                     <div class="project-number">02</div>
                     <div class="project-top">
-                        <div class="project-icon-wrap">
-                            <i class="fas fa-robot"></i>
+                        <div class="project-icon-wrap" style="background: linear-gradient(135deg, #7c3aed, #a855f7);">
+                            <i class="fas fa-camera"></i>
                         </div>
                         <div class="project-links">
                             <a href="https://github.com/shettyadi57" target="_blank" class="proj-link" aria-label="GitHub">
@@ -410,10 +477,47 @@
                             </a>
                         </div>
                     </div>
-                    <h3 class="project-title">More Coming Soon</h3>
-                    <p class="project-desc">Currently working on exciting new projects. Check back soon or visit my GitHub profile to see my latest contributions and experiments.</p>
+                    <h3 class="project-title">ChronosAI 🔍</h3>
+                    <p class="proj-type-badge"><i class="fas fa-shield-alt"></i> CCTV Forensics Platform</p>
+                    <p class="project-desc">Enterprise-grade, on-premise AI video analytics platform. Transforms raw CCTV footage into a searchable database — investigators query footage in natural language, filter by object class (Person, Vehicle, License Plate), and restore blurry evidence with the Forensic AI Blur-Free Super-Resolution Engine.</p>
+                    <div class="proj-highlights">
+                        <div class="proj-hl"><i class="fas fa-search"></i> Semantic NL search</div>
+                        <div class="proj-hl"><i class="fas fa-magic"></i> Lanczos4 Super-Res deblur</div>
+                        <div class="proj-hl"><i class="fas fa-file-pdf"></i> Court-ready PDF export</div>
+                        <div class="proj-hl"><i class="fas fa-clock"></i> 24-hr auto-purge system</div>
+                    </div>
                     <div class="project-tags">
-                        <span>Python</span><span>Flask</span><span>Web Dev</span>
+                        <span>React</span><span>FastAPI</span><span>Python</span>
+                        <span>YOLOv8</span><span>OpenCV</span><span>SQLite</span><span>CLIP</span>
+                    </div>
+                    <div class="project-shine"></div>
+                </div>
+
+                <!-- Project 3: Smart Seva -->
+                <div class="project-card glass-card tilt-card" id="proj-3">
+                    <div class="project-number">03</div>
+                    <div class="project-top">
+                        <div class="project-icon-wrap" style="background: linear-gradient(135deg, #059669, #10b981);">
+                            <i class="fas fa-id-card"></i>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/shettyadi57" target="_blank" class="proj-link" aria-label="GitHub">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <h3 class="project-title">Shivamogga Smart Seva 🏛️</h3>
+                    <p class="proj-type-badge"><i class="fas fa-landmark"></i> GovTech PWA · Karnataka</p>
+                    <p class="project-desc">Production-ready PWA for GramOne and Seva Sindhu service centers across Shivamogga District, Karnataka. Geo-detects nearest offices, enables multi-step Aadhaar-based token booking, priority queue for senior citizens & PwD, live WebSocket queue tracking, and AI-based Tatkal prediction engine.</p>
+                    <div class="proj-highlights">
+                        <div class="proj-hl"><i class="fas fa-map-marker-alt"></i> Geolocation office finder</div>
+                        <div class="proj-hl"><i class="fas fa-users"></i> Priority queue engine</div>
+                        <div class="proj-hl"><i class="fas fa-qrcode"></i> Digital token + PDF</div>
+                        <div class="proj-hl"><i class="fas fa-broadcast-tower"></i> WebSocket live board</div>
+                    </div>
+                    <div class="project-tags">
+                        <span>React 18</span><span>TypeScript</span><span>FastAPI</span>
+                        <span>PostgreSQL</span><span>Docker</span><span>Nginx</span><span>Leaflet</span>
                     </div>
                     <div class="project-shine"></div>
                 </div>
