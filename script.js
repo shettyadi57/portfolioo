@@ -376,7 +376,7 @@ document.querySelectorAll('a, button').forEach(el => {
 
     const cmds = {
         help:     'Commands: <span class="tc">projects · skills · bio · contact · matrix · clear · exit</span>',
-        projects: '<span class="tc">01</span> Little Heart Beat — AI Pregnancy Companion PWA<br><span class="tc">02</span> ChronosAI — CCTV Forensics &amp; Semantic Search<br><span class="tc">03</span> Shivamogga Smart Seva — GovTech PWA',
+        projects: '<span class="tc">01</span> Gyan — AI Repository Intelligence &amp; Architecture Platform<br><span class="tc">02</span> Little Heart Beat — AI Pregnancy Companion PWA<br><span class="tc">03</span> ChronosAI — CCTV Forensics &amp; Semantic Search<br><span class="tc">04</span> Shivamogga Smart Seva — GovTech PWA',
         skills:   '<span class="tc">Languages:</span> Python, TypeScript, JS, HTML/CSS, SQL, C<br><span class="tc">Frameworks:</span> React 18, FastAPI, Flask, OpenCV, YOLOv8<br><span class="tc">Tools:</span> Docker, Supabase, Git, Linux',
         bio:      '<span class="tc">Adithya S Shetty</span> — 2nd Year BCA @ Kuvempu University<br>District Coding Champion · National Hackathon Runner-Up · Full-Stack &amp; AI Engineer',
         contact:  '<span class="tc">Email:</span> shettyadithyas57@gmail.com<br><span class="tc">Phone:</span> +91 8088716254<br><span class="tc">GitHub:</span> @shettyadi57',
@@ -515,6 +515,7 @@ function initTypewriter() {
     if (!el) return;
 
     const phrases = [
+        'AI Repository Intelligence',
         'Full-Stack Applications',
         'AI-Powered Platforms',
         'GovTech PWAs',
@@ -580,7 +581,29 @@ function initTypewriter() {
 
 
 /* ══════════════════════════════════════════════
-   16. SMOOTH ANCHOR SCROLL
+   16. GYAN MODAL
+══════════════════════════════════════════════ */
+(function initGyanModal() {
+    const modal    = document.getElementById('gyan-modal');
+    const openBtn  = document.getElementById('open-gyan-modal');
+    const closeBtn = document.getElementById('gyan-modal-close');
+    const backdrop = document.getElementById('gyan-backdrop');
+
+    if (!modal) return;
+
+    const openModal  = () => { modal.classList.add('open'); document.body.style.overflow = 'hidden'; playTone(700, 'sine', 0.1, 0.03); };
+    const closeModal = () => { modal.classList.remove('open'); document.body.style.overflow = ''; playTone(400, 'sine', 0.08, 0.02); };
+
+    if (openBtn)  openBtn.addEventListener('click', openModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (backdrop) backdrop.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+})();
+
+
+/* ══════════════════════════════════════════════
+   17. SMOOTH ANCHOR SCROLL
 ══════════════════════════════════════════════ */
 document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', e => {

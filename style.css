@@ -2078,6 +2078,554 @@ section {
     justify-content: center;
 }
 
+
+/* ══════════════════════════════════════════════
+   GYAN PROJECT CARD
+══════════════════════════════════════════════ */
+.gyan-proj {
+    border-color: rgba(189, 0, 255, 0.22);
+    box-shadow:
+        0 0 0 1px rgba(189, 0, 255, 0.08),
+        0 24px 64px rgba(189, 0, 255, 0.08),
+        inset 0 1px 0 rgba(189, 0, 255, 0.1);
+    margin-bottom: 32px;
+}
+
+.gyan-proj:hover {
+    border-color: rgba(189, 0, 255, 0.4);
+    box-shadow:
+        0 0 0 1px rgba(189, 0, 255, 0.15),
+        0 32px 80px rgba(189, 0, 255, 0.12),
+        inset 0 1px 0 rgba(189, 0, 255, 0.15);
+}
+
+.gyan-badge {
+    background: linear-gradient(135deg, rgba(189, 0, 255, 0.12), rgba(100, 0, 180, 0.06));
+    border-color: rgba(189, 0, 255, 0.35);
+    color: var(--violet);
+}
+
+.gyan-title {
+    background: linear-gradient(135deg, var(--txt), var(--violet));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.gyan-sub {
+    color: var(--violet);
+}
+
+.gyan-hl {
+    background: rgba(189, 0, 255, 0.05);
+    border-color: rgba(189, 0, 255, 0.14);
+}
+
+.gyan-hl i { color: var(--violet); }
+
+.gyan-tags span {
+    background: rgba(189, 0, 255, 0.08);
+    border: 1px solid rgba(189, 0, 255, 0.22);
+    color: var(--violet);
+}
+
+/* "Inspect Architecture" button */
+.btn-gyan-dossier {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: 1px solid rgba(189, 0, 255, 0.5);
+    border-radius: 10px;
+    background: rgba(189, 0, 255, 0.07);
+    color: var(--violet);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: all 0.25s var(--ease);
+}
+
+.btn-gyan-dossier:hover {
+    background: rgba(189, 0, 255, 0.16);
+    border-color: var(--violet);
+    box-shadow: 0 0 20px rgba(189, 0, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+/* Gyan mockup window */
+.gyan-mock-window {
+    border-color: rgba(189, 0, 255, 0.25);
+}
+
+.gyan-mock-body {
+    gap: 12px;
+    padding: 16px;
+}
+
+/* Topology Pipeline */
+.gyan-topology {
+    background: rgba(189, 0, 255, 0.04);
+    border: 1px solid rgba(189, 0, 255, 0.12);
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+
+.topo-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--violet);
+    letter-spacing: 0.1em;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.topo-pipeline {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.topo-node {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    min-width: 58px;
+    text-align: center;
+}
+
+.topo-node span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.topo-node small {
+    font-size: 0.55rem;
+    opacity: 0.65;
+}
+
+.tn-client  { background: rgba(0, 245, 255, 0.08); border: 1px solid rgba(0, 245, 255, 0.2); color: var(--cyan); }
+.tn-gateway { background: rgba(189, 0, 255, 0.08); border: 1px solid rgba(189, 0, 255, 0.2); color: var(--violet); }
+.tn-service { background: rgba(0, 255, 163, 0.08); border: 1px solid rgba(0, 255, 163, 0.2); color: var(--green); }
+.tn-db      { background: rgba(255, 215, 0, 0.08); border: 1px solid rgba(255, 215, 0, 0.2); color: var(--gold); }
+
+.topo-arrow {
+    color: var(--txt-dim);
+    font-size: 0.6rem;
+    flex-shrink: 0;
+}
+
+/* Health HUD Grid */
+.gyan-hud-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.gyan-hud-stat {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    padding: 10px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+}
+
+.gyan-hud-stat strong {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--txt);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.gyan-hud-stat small {
+    font-size: 0.6rem;
+    color: var(--txt-dim);
+}
+
+/* Citation Toast */
+.gyan-citation-toast {
+    background: rgba(189, 0, 255, 0.06);
+    border: 1px solid rgba(189, 0, 255, 0.16);
+    border-radius: 8px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.72rem;
+    color: var(--txt-muted);
+}
+
+.gyan-citation-toast > i {
+    color: var(--violet);
+    font-size: 0.9rem;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+.gyan-citation-toast > div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.gct-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.56rem;
+    color: var(--violet);
+    letter-spacing: 0.1em;
+    font-weight: 700;
+}
+
+.gct-val {
+    font-size: 0.7rem;
+    color: var(--txt-muted);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+/* Blast Radius Bar */
+.gyan-blast-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    background: rgba(255, 62, 110, 0.04);
+    border: 1px solid rgba(255, 62, 110, 0.12);
+    border-radius: 8px;
+    font-size: 0.72rem;
+    color: var(--txt-muted);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.gbb-safe {
+    color: var(--green);
+    font-weight: 700;
+    font-size: 0.68rem;
+    margin-left: auto;
+}
+
+/* ══════════════════════════════════════════════
+   GYAN ARCHITECTURE MODAL
+══════════════════════════════════════════════ */
+.gyan-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s var(--ease);
+}
+
+.gyan-modal.open {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.gm-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(3, 7, 18, 0.88);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.gm-window {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 860px;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    border: 1px solid rgba(189, 0, 255, 0.3);
+    overflow: hidden;
+    transform: translateY(20px) scale(0.97);
+    transition: transform 0.35s var(--ease);
+    box-shadow: 0 40px 100px rgba(189, 0, 255, 0.15), 0 0 0 1px rgba(189, 0, 255, 0.08);
+}
+
+.gyan-modal.open .gm-window {
+    transform: translateY(0) scale(1);
+}
+
+.gm-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 28px 32px 24px;
+    border-bottom: 1px solid rgba(189, 0, 255, 0.12);
+    background: rgba(8, 4, 20, 0.6);
+    flex-shrink: 0;
+}
+
+.gm-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--violet);
+    letter-spacing: 0.16em;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 6px;
+}
+
+.gm-title {
+    font-family: 'Orbitron', monospace;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--txt), var(--violet));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 4px;
+}
+
+.gm-sub {
+    font-size: 0.82rem;
+    color: var(--txt-dim);
+}
+
+.gm-close {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--txt-muted);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.25s;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+}
+
+.gm-close:hover {
+    background: rgba(255, 62, 110, 0.1);
+    border-color: rgba(255, 62, 110, 0.4);
+    color: var(--magenta);
+}
+
+.gm-body {
+    overflow-y: auto;
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(189, 0, 255, 0.3) transparent;
+}
+
+.gm-section {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding-bottom: 24px;
+}
+
+.gm-section:last-child { border-bottom: none; padding-bottom: 0; }
+
+.gm-sec-title {
+    font-family: 'Orbitron', monospace;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--violet);
+    letter-spacing: 0.08em;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.gm-sec-title i { font-size: 0.85rem; }
+
+.gm-text {
+    color: var(--txt-muted);
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+
+/* 3-Tier Cards */
+.gm-tiers {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.gm-tier {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.gmt-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: var(--tc);
+    background: color-mix(in srgb, var(--tc) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--tc) 28%, transparent);
+    margin-bottom: 12px;
+}
+
+.gm-tier h5 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--txt);
+    margin-bottom: 8px;
+}
+
+.gm-tier p {
+    font-size: 0.8rem;
+    color: var(--txt-muted);
+    line-height: 1.75;
+}
+
+/* Capabilities Grid */
+.gm-caps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.gm-cap {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 10px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.gm-cap i { font-size: 1.1rem; }
+
+.gm-cap span {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--txt);
+}
+
+.gm-cap small {
+    font-size: 0.72rem;
+    color: var(--txt-dim);
+    line-height: 1.5;
+}
+
+/* Tech Stack Table */
+.gm-stack-table {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.gst-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    padding: 12px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.gst-row:last-child { border-bottom: none; }
+.gst-row:nth-child(odd) { background: rgba(255, 255, 255, 0.015); }
+
+.gst-layer {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--violet);
+    letter-spacing: 0.06em;
+    min-width: 90px;
+    flex-shrink: 0;
+}
+
+.gst-tech {
+    font-size: 0.82rem;
+    color: var(--txt-muted);
+}
+
+/* Engineering Challenges */
+.gm-challenges {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+}
+
+.gm-challenge {
+    background: rgba(189, 0, 255, 0.03);
+    border: 1px solid rgba(189, 0, 255, 0.1);
+    border-radius: 12px;
+    padding: 18px;
+}
+
+.gmc-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.58rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: var(--violet);
+    background: rgba(189, 0, 255, 0.1);
+    border: 1px solid rgba(189, 0, 255, 0.22);
+    margin-bottom: 10px;
+}
+
+.gm-challenge h5 {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--txt);
+    margin-bottom: 8px;
+}
+
+.gm-challenge p {
+    font-size: 0.78rem;
+    color: var(--txt-muted);
+    line-height: 1.72;
+}
+
+/* Modal responsive */
+@media (max-width: 768px) {
+    .gm-window { max-height: 92vh; }
+    .gm-header { padding: 20px 20px 16px; }
+    .gm-body { padding: 20px; gap: 20px; }
+    .gm-tiers, .gm-caps-grid, .gm-challenges { grid-template-columns: 1fr; }
+    .gyan-hud-grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Gyan card responsive */
+@media (max-width: 900px) {
+    .gyan-mock-body { gap: 10px; }
+    .topo-pipeline { gap: 4px; }
+    .topo-node { min-width: 48px; padding: 6px 7px; }
+    .topo-node span { font-size: 0.52rem; }
+}
+
 /* ══════════════════════════════════════════════
    ACHIEVEMENTS SECTION
 ══════════════════════════════════════════════ */
