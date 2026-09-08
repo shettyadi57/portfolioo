@@ -603,6 +603,28 @@ function initTypewriter() {
 
 
 /* ══════════════════════════════════════════════
+   17. PRAYAN MODAL
+══════════════════════════════════════════════ */
+(function initPrayanModal() {
+    const modal    = document.getElementById('prayan-modal');
+    const openBtn  = document.getElementById('open-prayan-modal');
+    const closeBtn = document.getElementById('prayan-modal-close');
+    const backdrop = document.getElementById('prayan-backdrop');
+
+    if (!modal) return;
+
+    const openModal  = () => { modal.classList.add('open'); document.body.style.overflow = 'hidden'; playTone(600, 'sine', 0.1, 0.03); };
+    const closeModal = () => { modal.classList.remove('open'); document.body.style.overflow = ''; playTone(350, 'sine', 0.08, 0.02); };
+
+    if (openBtn)  openBtn.addEventListener('click', openModal);
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    if (backdrop) backdrop.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+})();
+
+
+/* ══════════════════════════════════════════════
    17. SMOOTH ANCHOR SCROLL
 ══════════════════════════════════════════════ */
 document.querySelectorAll('a[href^="#"]').forEach(link => {
