@@ -375,12 +375,14 @@ document.querySelectorAll('a, button').forEach(el => {
     modal && modal.addEventListener('click', e => { if (e.target === modal) modal.classList.remove('open'); });
 
     const cmds = {
-        help:     'Commands: <span class="tc">projects · skills · bio · contact · matrix · clear · exit</span>',
-        projects: '<span class="tc">01</span> Gyan — AI Repository Intelligence &amp; Architecture Platform<br><span class="tc">02</span> Little Heart Beat — AI Pregnancy Companion PWA<br><span class="tc">03</span> ChronosAI — CCTV Forensics &amp; Semantic Search<br><span class="tc">04</span> Shivamogga Smart Seva — GovTech PWA',
-        skills:   '<span class="tc">Languages:</span> Python, TypeScript, JS, HTML/CSS, SQL, C<br><span class="tc">Frameworks:</span> React 18, FastAPI, Flask, OpenCV, YOLOv8<br><span class="tc">Tools:</span> Docker, Supabase, Git, Linux',
-        bio:      '<span class="tc">Adithya S Shetty</span> — 2nd Year BCA @ Kuvempu University<br>District Coding Champion · National Hackathon Runner-Up · Full-Stack &amp; AI Engineer',
-        contact:  '<span class="tc">Email:</span> shettyadithyas57@gmail.com<br><span class="tc">Phone:</span> +91 8088716254<br><span class="tc">GitHub:</span> @shettyadi57',
-        matrix:   '<span style="color:#00ffa3">WAKE UP, NEO... THE MATRIX HAS YOU.</span>',
+        help:         'Commands: <span class="tc">projects · skills · bio · awards · contact · matrix · clear · exit</span>',
+        projects:     '<span class="tc">01</span> Gyan — AI Repository Intelligence &amp; Architecture Platform<br><span class="tc">02</span> Little Heart Beat — AI Pregnancy Companion PWA<br><span class="tc">03</span> ChronosAI — CCTV Forensics &amp; Semantic Search<br><span class="tc">04</span> Shivamogga Smart Seva — GovTech PWA',
+        skills:       '<span class="tc">Languages:</span> Python, TypeScript, JS, HTML/CSS, SQL, C<br><span class="tc">Frameworks:</span> React 18, FastAPI, Flask, OpenCV, YOLOv8<br><span class="tc">Tools:</span> Docker, Supabase, Git, Linux',
+        bio:          '<span class="tc">Adithya S Shetty</span> — 3rd Year BCA Scholar @ Kuvempu University<br>CalmStack Hassan 1st Runner-Up · District Coding Champion · National Hackathon Runner-Up · Full-Stack &amp; AI Engineer',
+        awards:       '<span class="tc">01</span> 1st Runner-Up — CalmStack State 24H Hackathon @ MCE Hassan<br><span class="tc">02</span> 1st Place — Code Neura District Coding Champion<br><span class="tc">03</span> 1st Place — Green IT Sustainable Computing<br><span class="tc">04</span> Runner-Up — Tech Carnival 2K26 National Hackathon<br><span class="tc">05</span> Runner-Up — Code Nebula 2025<br><span class="tc">06</span> 5th Place — AI-SRHETICA National Hackathon @ SJBIT',
+        achievements: '<span class="tc">01</span> 1st Runner-Up — CalmStack State 24H Hackathon @ MCE Hassan<br><span class="tc">02</span> 1st Place — Code Neura District Coding Champion<br><span class="tc">03</span> 1st Place — Green IT Sustainable Computing<br><span class="tc">04</span> Runner-Up — Tech Carnival 2K26 National Hackathon<br><span class="tc">05</span> Runner-Up — Code Nebula 2025<br><span class="tc">06</span> 5th Place — AI-SRHETICA National Hackathon @ SJBIT',
+        contact:      '<span class="tc">Email:</span> shettyadithyas57@gmail.com<br><span class="tc">Phone:</span> +91 8088716254<br><span class="tc">GitHub:</span> @shettyadi57',
+        matrix:       '<span style="color:#00ffa3">WAKE UP, NEO... THE MATRIX HAS YOU.</span>',
     };
 
     function addLine(html, cls = '') {
